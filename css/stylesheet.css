@@ -1,0 +1,11 @@
+.col {
+    height: 100px;
+    background-color: goldenrod;
+    margin: 3%;
+}
+
+#city-image{
+    width: 100px;
+    height: 100px;
+    background-color: aliceblue;
+}
