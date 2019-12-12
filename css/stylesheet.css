@@ -10,6 +10,14 @@
     background-color: aliceblue;
 }
 
-.col-sm-6{
+.col-sm-2 {
+    background-color: orange;
 
+}
+
+
+.col-sm {
+
+    border: cornflowerblue solid 1px;
+    height: 50px;
 }
