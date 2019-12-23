@@ -17,11 +17,11 @@
 
 
 .col-sm {
-
     border: cornflowerblue solid 1px;
     height: 50px;
 }
 
 .jumbotron{
-
+    background-color: aquamarine;
+    height: 50px;
 }

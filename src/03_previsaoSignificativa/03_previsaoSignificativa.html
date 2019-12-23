@@ -3,57 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>METEOSITE - Previsão Significativa</title>
-    <meta name="description" content="Meteo site">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" src="script.js"></script>
+    <meta content="Meteo site" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../js/script.js"></script>
+
+
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../../css/stylesheet.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="../../js/script.js" type="text/javascript"></script>
+
 
 </head>
 <body>
 
-<div class="jumbotron text-center background">
+
+
+<div class="jumbotron">
     <div class="row">
         <div class="col-sm-3">
-
         </div>
     </div>
-    <h1>Previsão significativa</h1>
+    <h1>meteoSite</h1>
 </div>
 
+<div class="panel panel-default">
 
-<div class="container">
-    <div class="dia">
-        <div class="row">
-            <div class="col-sm-2">
-            </div>
-            <div class="hora">
-
-                <div class=celula_t>
-                    <div class="col-sm">
-                    </div>
-                </div>
-
-            </div>
-        </div>
+    <div class="panel-heading">
+        <h4 class="panel-title">Previsão Significativa</h4>
     </div>
-</div>
 
+    <div class="panel-body">
+        <div class="mediagroup">
 
-<div class="celula">
-    <div class="temperatura">
+            <ul class = "lista_dias">
+                <li class = "dia">
+                    <span class="temperatura"></span>
+                    <span class="temp_min"></span>
+                    <span class="temp_max"></span>
+                </li>
+            </ul>
+
+        </div>
     </div>
 
 </div>
 
 
 </body>
+
 </html>
