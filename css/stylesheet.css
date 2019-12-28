@@ -25,3 +25,8 @@
     background-color: aquamarine;
     height: 50px;
 }
+
+ul{
+    list-style-type: none;
+    padding-left: 10px;
+}
