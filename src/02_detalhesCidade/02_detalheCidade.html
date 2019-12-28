@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
+    <script src="../../js/detalhes.js" type="application/javascript"></script>
 
 </head>
 <body>
@@ -19,17 +20,28 @@
             <h1>Detalhes da Cidade</h1>
         </div>
     </div>
-<div class="container text-center" style="border-color: blueviolet">
     <div class="row">
-        <div class="col-sm-6" style="border-color: blue">
+        <div class="col-sm-12">
+            <h3>Estado do Tempo</h3>
+        </div>
+    </div>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-sm-6">
             <img src="../../imagens/Leiria.jpg" alt="Nome da Cidade">
         </div>
-        <div class="col-sm-6" style="border-color: brown">
-            <h2>Texto</h2>
+        <div class="col-sm-6">
+            <div class="row tempo">
+                <ul class="detalhes_tempo">
+                    <li class="item">
+                        <p class="param"></p>
+                        <p class="valor"></p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
-
 </div>
 </body>
 </html>
