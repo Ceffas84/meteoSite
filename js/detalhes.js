@@ -1,6 +1,8 @@
 "use strict";
 
-var pedido = "http://api.openweathermap.org/data/2.5/weather?q=London,us&APPID=5f641b8ef2e6971af3d88024c6489ebf";
+const diferenca_kelvin = 273.15;
+
+var pedido = "http://api.openweathermap.org/data/2.5/weather?q=Leiria,pt&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 
 var item_param = null;
 var item_valor = null;
@@ -25,9 +27,25 @@ $(function () {
             var item_param_clone = item_param.clone();
             var item_valor_clone = item_valor.clone();
             $('.param', item_param_clone).text(key);
-            $('.valor', item_valor_clone).text(msg.main[key]);
+            if (key === "temp" || key === "feels_like" || key === "temp_min" || key === "temp_max"){
+                var celcius = parseInt(converter_Kelvin_to_Celcius(msg.main[key]));
+                $('.valor', item_valor_clone).text(celcius + " C.");
+            } else {
+                $('.valor', item_valor_clone).text(msg.main[key]);
+            }
+
             $('.detalhes_tempo_param').append(item_param_clone);
             $('.detalhes_tempo_valor').append(item_valor_clone);
         });
     })
 });
+
+function converter_Kelvin_to_Celcius(kelvin_temp) {
+    var celcius = kelvin_temp - diferenca_kelvin;
+    return celcius;
+}
+
+function converter_Celcius_to_Kelvin(celcius_temp) {
+    var kelvin = celcius_temp + diferenca_kelvin;
+    return kelvin;
+}
