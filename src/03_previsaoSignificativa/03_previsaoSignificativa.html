@@ -6,12 +6,11 @@
     <meta content="Meteo site" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
+    <link href="../../css/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="../../js/significativa.js" type="application/javascript"></script>
-
 
 </head>
 <body>
@@ -26,28 +25,43 @@
     <h1>meteoSite</h1>
 </div>
 
-<div class="panel panel-default">
 
-    <div class="panel-heading">
-        <h4 class="panel-title">Previsão Significativa</h4>
-    </div>
 
-    <div class="panel-body">
-        <div class="mediagroup">
+<table class="table">
+    <thead>
+        <tr class="linha_hora">
+            <th class="hora">H</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="linha_dias">
+            <th scope="row" class="coluna_dia">DIA</th>
+            <td class="celula">0</td>
+            <td class="celula">1</td>
+            <td class="celula">2</td>
+            <td class="celula">3</td>
+            <td class="celula">4</td>
+            <td class="celula">5</td>
+            <td class="celula">6</td>
+            <td class="celula">7</td>
+        </tr>
+    </tbody>
+</table>
 
-            <ul class = "lista_dias">
-                <li class = "dia">
-                    <span class="temperatura"></span>
-                    <span class="temp_min"></span>
-                    <span class="temp_max"></span>
-                </li>
-            </ul>
 
-        </div>
-    </div>
+
+<!--
+<div>
+    <ul class="linha_hora">
+        <li class="horas">
+            <p class="hora"></p>
+        </li>
+    </ul>
 
 </div>
 
+
+-->
 
 </body>
 
