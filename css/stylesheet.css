@@ -12,7 +12,6 @@
 
 .col-sm-2 {
     background-color: orange;
-
 }
 
 
@@ -24,4 +23,9 @@
 .jumbotron{
     background-color: aquamarine;
     height: 50px;
+}
+
+ul{
+    list-style-type: none;
+    padding-left: 10px;
 }

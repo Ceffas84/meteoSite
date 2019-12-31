@@ -6,24 +6,12 @@
     <meta content="Meteo site" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../../js/script.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-
-
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="../../css/stylesheet.css" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script src="../../js/script.js" type="text/javascript"></script>
-
+    <link href="../../css/stylesheet.css" rel="stylesheet" type="text/css">
+    <script src="../../js/significativa.js" type="application/javascript"></script>
 
 </head>
 <body>
@@ -38,27 +26,31 @@
     <h1>meteoSite</h1>
 </div>
 
-<div class="panel panel-default">
 
-    <div class="panel-heading">
-        <h4 class="panel-title">Previsão Significativa</h4>
-    </div>
 
-    <div class="panel-body">
-        <div class="mediagroup">
+<table class="table text-center">
 
-            <ul class = "lista_dias">
-                <li class = "dia">
-                    <span class="temperatura"></span>
-                    <span class="temp_min"></span>
-                    <span class="temp_max"></span>
-                </li>
-            </ul>
+    <thead>
+        <tr class="linha_hora">
+            <th class="coluna_hora text-center">
+                <span class="conteudo_hora"></span>
+            </th>
+        </tr>
+    </thead>
 
-        </div>
-    </div>
+    <tbody class="dados_dia">
+        <tr class="linha_dia">
+            <th scope="row" class="coluna_dia_h text-center">
+                <span class="conteudo_dia_h"></span>
+            </th>
+            <td class="coluna_dia">
+                <span class="conteudo_dia"></span>
+            </td>
+        </tr>
+    </tbody>
 
-</div>
+</table>
+
 
 
 </body>
