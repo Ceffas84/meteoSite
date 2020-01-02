@@ -29,3 +29,7 @@ ul{
     list-style-type: none;
     padding-left: 10px;
 }
+
+span.valor{
+    margin: 25px;
+}
