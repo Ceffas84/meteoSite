@@ -20,12 +20,29 @@
     height: 50px;
 }
 
-.jumbotron{
-    background-color: aquamarine;
-    height: 50px;
-}
+
 
 ul{
     list-style-type: none;
     padding-left: 10px;
+}
+
+span.valor{
+    margin: 25px;
+}
+
+.barra-nav{
+    background-color: aliceblue;
+}
+
+.bloco-esq img{
+    height: 100px;
+}
+
+.signif-conteudo{
+     background-color: aliceblue;
+}
+
+.signif-conteudo .linha_dia span{
+    display: block;
 }

@@ -1,8 +1,6 @@
 "use strict";
 
-const diferenca_kelvin = 273.15;
 
-var pedido = "http://api.openweathermap.org/data/2.5/weather?q=Leiria,pt&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 
 var item_param = null;
 var item_valor = null;
@@ -19,13 +17,9 @@ $(function () {
         url: pedido
     }).done(function (msg) {
         if(typeof Storage !== "undefined"){
-            //codigo para localStorage
-            const msgString = JSON.stringify(msg);
-            Object.keys(msg).forEach(function (key){
-                if(key === "name"){
-                    $('#nome_cidade').text(msg[key]);
-                }
-            });
+
+            $('#nome_cidade').text(msg.name);
+
             Object.keys(msg.main).forEach(function(key){
                 var item_param_clone = item_param.clone();
                 var item_valor_clone = item_valor.clone();
@@ -55,14 +49,4 @@ function converter_Celcius_to_Kelvin(celcius_temp) {
     return kelvin;
 }
 
-/*
-function converte_temperatura(arr) {
 
-}
-var arrTemp = $('.valor').toArray();
-arrTemp.forEach(function (temp){
-    console.log("Temperatura em C: " + temp);
-    arrTemp[temp] = converter_Celcius_to_Kelvin(temp);
-    console.log("Temperatura em K: " + arrTemp[temp]);
-});
- */
