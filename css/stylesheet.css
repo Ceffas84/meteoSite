@@ -27,6 +27,10 @@ ul{
     padding-left: 10px;
 }
 
+span.valor{
+    margin: 25px;
+}
+
 .barra-nav{
     background-color: aliceblue;
 }
@@ -41,5 +45,4 @@ ul{
 
 .signif-conteudo .linha_dia span{
     display: block;
-
 }
