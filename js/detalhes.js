@@ -1,8 +1,6 @@
 "use strict";
 
-const diferenca_kelvin = 273.15;
 
-var pedido = "http://api.openweathermap.org/data/2.5/weather?q=Leiria,pt&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 
 var item_param = null;
 var item_valor = null;

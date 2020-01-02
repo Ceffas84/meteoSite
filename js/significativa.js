@@ -7,6 +7,7 @@ let item_coluna_hora = null;
 let item_coluna_dia_h_0 = null;
 let item_coluna_dia_h_1 = null;
 let item_coluna_dia = null;
+let item_linha_dia = null;
 const dias_semana =["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
 const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -54,7 +55,7 @@ $(function () {
         }
 
         for (var i = 0, a=0; i < 40; i = i + 8, a++) {
-            var linha_dia_clone =item_linha_dia.clone();
+            var linha_dia_clone = item_linha_dia.clone();
             var coluna_dia_h_0_clone = item_coluna_dia_h_0.clone();
             var coluna_dia_h_1_clone = item_coluna_dia_h_1.clone();
             var elemento = msg.list[i];
@@ -63,7 +64,6 @@ $(function () {
                 mes = date_time.getMonth(),
                 ano = date_time.getFullYear(),
                 dia_sem = date_time.getDay();
-
             
             $('.dia_sem',coluna_dia_h_0_clone).text(dias_semana[dia_sem]);
             $('.dia_mes',coluna_dia_h_0_clone).text(dia+" de "+meses[mes]+" de "+ano);
