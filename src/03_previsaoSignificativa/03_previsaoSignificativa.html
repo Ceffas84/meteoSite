@@ -10,48 +10,60 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+
     <link href="../../css/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="../../js/significativa.js" type="application/javascript"></script>
 
 </head>
+
 <body>
 
-
-
-<div class="jumbotron">
+<div class="container-fluid barra-nav">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-3 bloco-esq">
+            <img src ="../../imagens/logo_meteosite.png" alt = "logo site">
+        </div>
+        <div class="col-sm-9 bloco-drt text-center">
+            <h2>Previsão Significativa</h2>
         </div>
     </div>
-    <h1>meteoSite</h1>
 </div>
 
-
-
-<table class="table text-center">
-
-    <thead>
-        <tr class="linha_hora">
-            <th class="coluna_hora text-center">
-                <span class="conteudo_hora"></span>
-            </th>
-        </tr>
-    </thead>
-
-    <tbody class="dados_dia">
-        <tr class="linha_dia">
-            <th scope="row" class="coluna_dia_h text-center">
-                <span class="conteudo_dia_h"></span>
-            </th>
-            <td class="coluna_dia">
-                <span class="conteudo_dia"></span>
-            </td>
-        </tr>
-    </tbody>
-
-</table>
-
-
+<div class="container-fluid signif-conteudo">
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table">
+                <thead class="dados_hora">
+                <tr class="linha_hora">
+                    <th scope="col" class="coluna_hora text-center">
+                        <span class="conteudo_hora"></span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="dados_dia">
+                <tr class="linha_dia">
+                    <th scope="row" class="coluna_dia_h_0 text-center">
+                        <span class="dia_sem"></span>
+                        <span class="dia_mes"></span>
+                    </th>
+                    <th class="coluna_dia_h_1 text-center">
+                        <span class="temperatura_lg">Temp.</span>
+                        <span class="vento_vel_lg">Vel. Vento</span>
+                        <span class="vento_dir_lg">Dir. Vento</span>
+                    </th>
+                    <td class="coluna_dia text-center">
+                        <div class="conteudo_dia">
+                            <span class="temperatura"></span>
+                            <span class="vento_vel"></span>
+                            <span class="vento_dir"></span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 
