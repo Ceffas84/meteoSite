@@ -1,22 +1,21 @@
 "use strict";
 
-
-
 var item_param = null;
 var item_valor = null;
+var msg = JSON.parse(localStorage.getItem('tempo_actual'));
+console.log(typeof msg, msg);
 
-$(function () {
+
+/*$(function () {
     item_param = $('.item_param').clone();
     item_valor = $('.item_valor').clone();
 
     $('.detalhes_tempo_param').html('');
     $('.detalhes_tempo_valor').html('');
 
-    $.ajax({
-        method: 'GET',
-        url: pedido
-    }).done(function (msg) {
-        if(typeof Storage !== "undefined"){
+
+
+    if(typeof Storage !== "undefined"){
 
             $('#nome_cidade').text(msg.name);
 
@@ -36,7 +35,7 @@ $(function () {
         } else {
             alert("O browser que esta a utilizar nao suporta Web Storage.");
         }
-    })
+    });
 });
 
 function converter_Kelvin_to_Celcius(kelvin_temp) {
@@ -47,6 +46,6 @@ function converter_Kelvin_to_Celcius(kelvin_temp) {
 function converter_Celcius_to_Kelvin(celcius_temp) {
     var kelvin = celcius_temp + diferenca_kelvin;
     return kelvin;
-}
+}*/
 
 

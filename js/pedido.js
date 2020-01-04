@@ -11,6 +11,7 @@ if(typeof Storage !== "undefined"){
 var autocomplete;
 var place;
 
+
 $(function inicilizar_autocomplete() {
     var input = document.getElementById('searchTextField');
     autocomplete = new google.maps.places.Autocomplete(input);
@@ -23,27 +24,26 @@ $(function inicilizar_autocomplete() {
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
-const ResponseOK = "200";
+const PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME = 0;
+const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 2;
+const ResponseOK = 200;
 
 function pesquisar() {
     place = autocomplete.getPlace();
-    console.log(typeof place, place);
-    let city = place.name;
-    console.log(city);
-    let city_ID = place.getId();
-    console.log(city_ID);
-    let foto = place.photos;
-    console.log(foto);
+    //console.log(typeof place, place);
+    let city = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
+               place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+    //console.log(city);
     let unidade = "&units="+localStorage.getItem('unidade');
     let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
+    //console.log(pedido_tempo_actual);
     let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
 
-    /*
     $.ajax({
         method: 'GET',
         url: pedido_tempo_actual
     }).done(function (msg) {
-        if(msg.cod != ResponseOK){
+        if(parseInt(msg.cod) != ResponseOK){
             alert("Erro: " + msg.cod + "\n" + msg.message);
         } else {
             if(typeof Storage !== "undefined"){
@@ -62,7 +62,7 @@ function pesquisar() {
     }).done(function (msg) {
         console.log(msg.cod);
         console.log(typeof msg.cod);
-        if(msg.cod !== ResponseOK){
+        if(parseInt(msg.cod) !== ResponseOK){
             alert("Erro: " + msg.cod + "\n" + msg.message);
         } else {
             if(typeof Storage != "undefined"){
@@ -73,6 +73,5 @@ function pesquisar() {
                 alert("Web Storage não suportado.");
             }
         }
-    })
-    */
+    });
 }
