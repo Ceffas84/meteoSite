@@ -16,42 +16,61 @@
 </head>
 <body>
     <header>
-        <div style="text-align: center">
-            <h1>Meteo Site</h1>
+        <div class="container cab_pagina">
+            <div class="row">
+                <div class="col-sm-3 bloco-esq text-center align-middle">
+                    <img src="../../imagens/logo_meteosite.png" alt="logo site">
+                </div>
+                <div class="col-sm-9 bloco-drt text-center ">
+                    <h1>Meteo Site</h1>
+
+                </div>
+            </div>
         </div>
+
     </header>
     <div class="container">
         <div class="row">
-            <div class="col" style="text-align: center">
+            <div class="col-sm-1">
                 <p>imagem_01</p>
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 <p>imagem_02</p>
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 <p>imagem_03</p>
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 <p>imagem_04</p>
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 <p>imagem_05</p>
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 <p>imagem_06</p>
+            </div>
+            <div class="col-sm-2">
+                <button><a href="../04_gertaoFavoritos/04_gestaoFavoritos.html">Gestao Favoritos</a></button>
             </div>
         </div>
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col text-center" >
                 <p><span>Pesquisa</span>
-                    <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
+                    <form action="../02_detalhesCidade/02_detalheCidade.html" method="GET">
+                        <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
+                        <span class="submit"> <input type="submit"></span>
+                    </form>
                 </p>
             </div>
         </div>
     </div>
-<div class="resultado"></div>
+<div class="resultado">
+    <ul>
+
+    </ul>
+</div>
 <div class="resultado1"></div>
 </body>
 </html>

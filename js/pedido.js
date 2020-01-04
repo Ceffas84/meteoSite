@@ -18,6 +18,7 @@ $(function inicilizar_autocomplete() {
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
         pesquisar();
     });
+    console.log(autocomplete);
 });
 
 
@@ -34,9 +35,9 @@ function pesquisar() {
     let city = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
                place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
     //console.log(city);
+    let foto = place.photos;
     let unidade = "&units="+localStorage.getItem('unidade');
     let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
-    //console.log(pedido_tempo_actual);
     let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
 
     $.ajax({
