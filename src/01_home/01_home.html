@@ -5,11 +5,9 @@
     <title>Meteo Site - Home</title>
     <meta name="description" content="Meteo site">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../css/stylesheet.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ2rZvZIQ0ZNnnJnFPd-rdfdjtgmnD444&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
@@ -48,8 +46,7 @@
         <div class="row">
             <div class="col">
                 <p><span>Pesquisa</span>
-                    <input id="input_txt" type="text">
-                    <button onclick="pesquisar()" id="btn_search">Pesquisar</button>
+                    <input id="searchTextField" type="text" size="50" placeholder="Anything you want!">
                 </p>
             </div>
         </div>
