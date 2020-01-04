@@ -1,26 +1,8 @@
-.col {
-    height: 100px;
-    background-color: goldenrod;
-    margin: 3%;
-}
-
 #city-image{
     width: 100px;
     height: 100px;
     background-color: aliceblue;
 }
-
-.col-sm-2 {
-    background-color: orange;
-}
-
-
-.col-sm {
-    border: cornflowerblue solid 1px;
-    height: 50px;
-}
-
-
 
 ul{
     list-style-type: none;
@@ -31,18 +13,48 @@ span.valor{
     margin: 25px;
 }
 
-.barra-nav{
+
+/*-----------------------------------PÁGINA PREVISÃO SIGNIFICATIVA-----------------------------*/
+.pag_prev_significativa{
     background-color: aliceblue;
 }
 
-.bloco-esq img{
-    height: 100px;
+.cab_pagina{
+
+}
+.cab_pagina img{
+    height: 100%;
 }
 
-.signif-conteudo{
-     background-color: aliceblue;
+.bloco-drt h2{
+    line-height: 100%;
+}
+.bloco-esq{
+    height: 100%;
 }
 
-.signif-conteudo .linha_dia span{
+.previsao_dias a {
+    text-decoration: none;
+}
+
+.linha_blocos a:hover{
+    font-weight: bolder
+}
+
+
+.linha_blocos{
+    padding: 0 5%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.bloco_dia{
+    width: 100%;
+}
+
+.btn_dia{
+    width: 100%;
+}
+
+.lista_arg span{
     display: block;
 }
