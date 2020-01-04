@@ -16,14 +16,14 @@ span.valor{
 
 /*-----------------------------------PÁGINA PREVISÃO SIGNIFICATIVA-----------------------------*/
 .pag_prev_significativa{
-    background-color: aliceblue;
+    background-color: powderblue;
 }
 
 .cab_pagina{
 
 }
 .cab_pagina img{
-    height: 100%;
+    height: 5rem;
 }
 
 .bloco-drt h2{
@@ -53,6 +53,9 @@ span.valor{
 
 .btn_dia{
     width: 100%;
+}
+.signif-conteudo{
+    background-color: #84cab2;
 }
 
 .lista_arg span{
