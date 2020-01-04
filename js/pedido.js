@@ -17,6 +17,7 @@ $(function inicilizar_autocomplete() {
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
         pesquisar();
     });
+    console.log(autocomplete);
 });
 
 
@@ -30,8 +31,8 @@ function pesquisar() {
     console.log(typeof place, place);
     let city = place.name;
     console.log(city);
-    let city_ID = place.getId();
-    console.log(city_ID);
+   // let city_ID = place.getId();
+    //console.log(city_ID);
     let foto = place.photos;
     console.log(foto);
     let unidade = "&units="+localStorage.getItem('unidade');
