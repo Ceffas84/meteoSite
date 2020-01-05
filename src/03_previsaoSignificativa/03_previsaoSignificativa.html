@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>METEOSITE - Previsão Significativa</title>
+    <title>Previsão Significativa</title>
     <meta content="Meteo site" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="pag_prev_significativa">
+<body onload="renderizar_significativa()" class="pag_prev_significativa">
 
 <div class="container cab_pagina">
     <div class="row">
@@ -43,7 +43,6 @@
                         <span class="dia"></span>
                     </div>
                     <hr>
-                    <span class="temperatura"></span>
                     <div class="box_temperatura">
                         <div class="temp_logo">
                             <img src="../../imagens/termometro.png" alt="termometro">
@@ -105,7 +104,7 @@
     </table>
 
     <!--</div>
-<button onclick="atribuir_dias()"></button>
-</body>-->
+    <button onclick="atribuir_dias()"></button>
+    </body>-->
 
 </html>
