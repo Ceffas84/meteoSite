@@ -35,28 +35,23 @@ let json_str = localStorage.getItem("significativa");
 let msg = JSON.parse(json_str);
 let prev_dias_select = null;
 
-//----Função On document loaded
+//----Função OnLoad Página Significativa
 //Prenche e clona os 5 dias da previsão
-$(function() {
+function renderizar_significativa() {
+    //Clone dos blocos de html
     item_coluna_hora = $('.coluna_hora').clone();
     $('.linha_hora').html('');
     item_coluna_dia_h_0 = $('.coluna_dia_h_0').clone();
     item_coluna_dia = $('.coluna_dia').clone();
     $('.linha_dia').html('');
-
     item_bloco_dia = $('.bloco_dia').clone();
     $('.linha_blocos').html('');
 
     let json_min_max = atribuir_dias();
 
-
     for (let i = 1, dados = 0; i <= 5; i++, dados = dados + 8) {
-        let item_bloco_dia_clone = item_bloco_dia.clone()
-        $(item_bloco_dia_clone).attr("id","dia_"+i);
-        $('.btn_dia',item_bloco_dia_clone).addClass("btn_dia");
-        $('.btn_dia',item_bloco_dia_clone).attr("id","btn_dia_"+i);
-        $('.btn_dia',item_bloco_dia_clone).attr("onclick","esconde_mostra_cont_signif("+i+")");
-        $('.linha_blocos').append(item_bloco_dia_clone);
+
+        let item_bloco_dia_clone = item_bloco_dia.clone();
 
         let dados_json = msg.list[dados];
         let date_time = new Date(dados_json.dt_txt),
@@ -68,22 +63,23 @@ $(function() {
         let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
         let vento_dir = dados_json.wind.deg;
         let humidade = dados_json.main.humidity;
-
         let temp_min = json_min_max[i].temp_min;
         let temp_max = json_min_max[i].temp_max;
 
-        $('.data','#dia_'+i).text(dia + "/" + meses_abrv[mes]);
-        $('.dia', '#dia_'+i).text(dias_semana[dia_sem]);
-        $('.temperatura','#dia_'+i).text(temperatura + "º");
+        $(item_bloco_dia_clone).attr("id","dia_"+i);
+        $('.btn_dia',item_bloco_dia_clone).addClass("btn_dia");
+        $('.btn_dia',item_bloco_dia_clone).attr("id","btn_dia_"+i);
+        $('.btn_dia',item_bloco_dia_clone).attr("onclick","esconde_mostra_cont_signif("+i+")");
+        $('.data',item_bloco_dia_clone).text(dia + "/" + meses_abrv[mes]);
+        $('.dia', item_bloco_dia_clone).text(dias_semana[dia_sem]);
+        $('.temp_min', item_bloco_dia_clone).text(temp_min+"º");
+        $('.temp_max', item_bloco_dia_clone).text(temp_max+"º");
+        $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
+        $('.vento_dir',item_bloco_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
+        $('.humidade', item_bloco_dia_clone).text(humidade+"%");
 
-        $('.temp_min','#dia_'+i).text(temp_min+"º");
-        $('.temp_max','#dia_'+i).text(temp_max+"º");
+        $('.linha_blocos').append(item_bloco_dia_clone);
 
-        $('.vento_vel', '#dia_'+i).text(vento_vel + " km/h");
-        $('.vento_dir', '#dia_'+i).text(ponto_cardeal(parseInt(vento_dir)));
-        $('.humidade', '#dia_'+i).text(humidade+"%");
-
-        //console.log("i -> ", i, "Data -> ", dia,"-",ano,"-",mes, " Temp. -> ", temperatura, "Vel. Vento -> ", vento_vel, "Direcao Vento", vento_dir);
     }
     $('#cidade_nome').text(msg.city.name);
     $('#cidade_pais').text(msg.city.country);
@@ -95,7 +91,7 @@ $(function() {
     btn_dia4_select = $('#btn_dia_4');
     btn_dia5_select = $('#btn_dia_5');
     btn_dia_select = $('.btn_dia');
-});
+}
 
 function atribuir_dias() {
 
@@ -133,14 +129,10 @@ function atribuir_dias() {
             }
         }
     }
-
-    temp_min_max.forEach(function (elemento) {
-        console.log("Dia -> "+elemento.data+"Min -> "+elemento.temp_min+" Max ->"+elemento.temp_max);
-    });
-
+    //temp_min_max.forEach(function (elemento) {
+    //    console.log("Dia -> "+elemento.data+"Min -> "+elemento.temp_min+" Max ->"+elemento.temp_max);
+    //});
     return temp_min_max;
-
-
 }
 
 
