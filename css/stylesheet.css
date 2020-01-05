@@ -128,7 +128,8 @@ ul{
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
+.bloco_dia{
+}
 .previsao_3h{
     background-color: #84cab2;
 }
@@ -139,46 +140,6 @@ ul{
     border: #1c9f73 1px solid;
 }
 
-
-/*---------------Página Gestão de Favoritos----------------*/
-.panel-default {
-    margin: 20px;
-}
-.box-jumbotron{
-    margin: 20px;
-}
-.media{
-    display: table;
-}
-
-.media_cell{
-    display: table-cell;
-    vertical-align: middle;
-}
-
-
-.fav_box_img img{
-    max-height: 50px;
-}
-
-.fav_box{
-    display: table-cell;
-    width: 10%;
-}
-.fav_box_dados{
-    display: table-cell;
-    width: 70%;
-
-}
-.fav_box_img{
-    display: table-cell;
-    width: 5%;
-}
-.custom-checkbox{
-    display: flex;
-    flex-direction: row;
-
-}
 
 
 
