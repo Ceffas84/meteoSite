@@ -1,17 +1,39 @@
-#city-image{
-    width: 100px;
-    height: 100px;
-    background-color: aliceblue;
-}
-
 ul{
     list-style-type: none;
     padding-left: 10px;
 }
 
-span.valor{
-    margin: 25px;
+.título{
+    margin-top: 5%;
 }
+
+.div_detalhes{
+    margin: 5%;
+}
+
+.item_nome{
+    color: #84cab2;
+}
+
+.item_valor{
+    font-weight: bold;
+    color: #0687fc;
+}
+
+.div_btn{
+    padding: 5%;
+}
+
+#detalhes_imagem_cidade{
+    max-width: 100%;
+    max-height: 530px;
+}
+
+/*.moldura_foto{
+    width: 400px;
+    height: 500px;
+}*/
+
 
 
 /*-----------------------------------PÁGINA PREVISÃO SIGNIFICATIVA-----------------------------*/
