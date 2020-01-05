@@ -6,16 +6,17 @@
     <meta name="description" content="Meteo site">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ2rZvZIQ0ZNnnJnFPd-rdfdjtgmnD444&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
-    <script src="../../js/pedido.js" type="application/javascript"></script>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="../../css/stylesheet.css" rel="stylesheet" type="text/css">
+    <script src="../../js/main.js" type="application/javascript"></script>
 
 </head>
-<body class="pag_home">
+<body class="pag_home" onload="inicilizar_autocomplete()">
     <header>
         <div class="container">
             <div class="row">
@@ -59,8 +60,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center" >
-                <p><span>Pesquisa</span>
-                    <form id="formNome" onsubmit="submeterNome()" action="../02_detalhesCidade/02_detalheCidade.html" method="GET">
+                <p><span>Pesquisa por cidade</span>
+                    <form id="formNome" action="../02_detalhesCidade/02_detalheCidade.html" method="GET">
                         <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
                         <span class="submit"> <input type="submit"></span>
                     </form>
@@ -68,11 +69,5 @@
             </div>
         </div>
     </div>
-<div class="resultado">
-    <ul>
-
-    </ul>
-</div>
-<div class="resultado1"></div>
 </body>
 </html>
