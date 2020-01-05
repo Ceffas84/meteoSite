@@ -25,7 +25,6 @@ const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 const PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME = 0;
 const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 2;
-const ResponseOK = 200;
 
 function pesquisar() {
     place = autocomplete.getPlace();
