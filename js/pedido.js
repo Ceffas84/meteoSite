@@ -28,7 +28,6 @@ const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 2;
 
 function pesquisar() {
     place = autocomplete.getPlace();
-    localStorage.setItem('place', JSON.stringify(place));
     //console.log(typeof place, place);
     let city = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
                place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
@@ -41,7 +40,23 @@ function pesquisar() {
     let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
     localStorage.setItem('pedido_significativa', pedido_significativa);
 
-    /*
+    $.ajax({
+        method: 'GET',
+        url: pedido_tempo_actual
+    }).done(function (msg) {
+        if(parseInt(msg.cod) != ResponseOK){
+            alert("Erro: " + msg.cod + "\n" + msg.message);
+        } else {
+            if(typeof Storage !== "undefined"){
+                //código para webStorage Api
+                localStorage.setItem('tempo_atual', JSON.stringify(msg));
+                console.log("Tempo atual -> ", localStorage.getItem('tempo_atual'));
+            } else {
+                alert("Web Storage não suportado.");
+            }
+        }
+    });
+
     $.ajax({
         method: 'GET',
         url: pedido_significativa
@@ -59,5 +74,5 @@ function pesquisar() {
                 alert("Web Storage não suportado.");
             }
         }
-    });*/
+    });
 }
