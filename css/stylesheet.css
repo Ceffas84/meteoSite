@@ -61,3 +61,257 @@ span.valor{
 .lista_arg span{
     display: block;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*pagina home */
+#lista_img{
+    padding-bottom: 30px;
+    padding-top: 30px;
+
+}
+
+
+.pag_home {
+
+}
+
+
+/*pagina favoritos*/
+
+.img_logo {
+    height: 10rem;
+}
+div .fav{
+    position:absolute;
+    top:50%;
+    left:50%;
+}
+
+.btn_fav{
+    background: #84cab2;
+    color: powderblue;
+    border: none;
+}
+.btn_fav  a {
+    color: white;
+}
+
+.btn_fav :hover {
+    color: powderblue;
+    background-color: #84cab2;
+}
+
+.seta_topo{
+    background: #84cab2;
+}
+
+.navbar {
+    font-size: 12px !important;
+    background-color: powderblue;
+    border: none;
+}
+
+
+
+
+
+
+.glyphicon{
+    font-size: 20px;
+    padding-bottom: 20px;
+    color: blue;
+    float: right;
+
+}
+
+
+

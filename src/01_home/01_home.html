@@ -13,13 +13,14 @@
     <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
     <script src="../../js/pedido.js" type="application/javascript"></script>
 
+
 </head>
-<body>
+<body class="pag_home">
     <header>
-        <div class="container cab_pagina">
+        <div class="container">
             <div class="row">
                 <div class="col-sm-3 bloco-esq text-center align-middle">
-                    <img src="../../imagens/logo_meteosite.png" alt="logo site">
+                    <img class="img_logo" src="../../imagens/logo_meteosite.png" alt="logo site">
                 </div>
                 <div class="col-sm-9 bloco-drt text-center ">
                     <h1>Meteo Site</h1>
@@ -29,7 +30,8 @@
         </div>
 
     </header>
-    <div class="container">
+
+    <div class="container" id="lista_img">
         <div class="row">
             <div class="col-sm-1">
                 <p>imagem_01</p>
@@ -50,15 +52,16 @@
                 <p>imagem_06</p>
             </div>
             <div class="col-sm-2">
-                <button><a href="../04_gertaoFavoritos/04_gestaoFavoritos.html">Gestao Favoritos</a></button>
+                <button class="btn_fav"><a href="../04_gertaoFavoritos/04_gestaoFavoritos.html">Gestao Favoritos</a></button>
             </div>
         </div>
+
     </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center" >
                 <p><span>Pesquisa</span>
-                    <form action="../02_detalhesCidade/02_detalheCidade.html" method="GET">
+                    <form id="formNome" onsubmit="submeterNome()" action="../02_detalhesCidade/02_detalheCidade.html" method="GET">
                         <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
                         <span class="submit"> <input type="submit"></span>
                     </form>
