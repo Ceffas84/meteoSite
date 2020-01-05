@@ -38,16 +38,16 @@ ul{
 
 /*-----------------------------------PÁGINA PREVISÃO SIGNIFICATIVA-----------------------------*/
 .pag_prev_significativa{
-    background-color: aliceblue;
+    background-color: powderblue;
 }
 
+/*---------------Cabeçalho página-------------*/
 .cab_pagina{
 
 }
-.cab_pagina img{
-    height: 100%;
+.cab_pagina img {
+    max-height: 100px;
 }
-
 .bloco-drt h2{
     line-height: 100%;
 }
@@ -55,28 +55,87 @@ ul{
     height: 100%;
 }
 
-.previsao_dias a {
-    text-decoration: none;
+
+
+/*----------------Box temperatura----------------*/
+.box_temperatura{
+    display: block;
+}
+.box_temperatura img{
+    display:table;
+    height: 68px;
+}
+.temp_logo {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.temp_dados{
+    display: table-cell;
+    vertical-align: middle;
+}
+.temp_dados span{
+    margin: 10px;
+    padding: 0 10px;
+}
+/*----------------Box vento----------------*/
+.box_vento{
+    display: block;
+}
+.box_vento img{
+    display:table;
+    max-height: 68px;
+    max-width: 20px;
+}
+.vento_logo {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.vento_dados{
+    display: table-cell;
+    vertical-align: middle;
+}
+.vento_dados span{
+    margin: 3px;
 }
 
-.linha_blocos a:hover{
-    font-weight: bolder
+/*----------------Box humidade----------------*/
+.box_humidade{
+    display: block;
+    align-content: center;
 }
-
-
+.box_humidade img{
+    display:table;
+    max-height: 40px;
+    max-width: 10px;
+}
+.humidade_logo {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.humidade_dados{
+    display: table-cell;
+    vertical-align: middle;
+}
+.humidade_dados span{
+    width: 100%;
+    margin: 3px;
+}
+ /*-------------------*/
 .linha_blocos{
-    padding: 0 5%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 .bloco_dia{
-    width: 100%;
 }
-
-.btn_dia{
-    width: 100%;
+.previsao_3h{
+    background-color: #84cab2;
 }
-
 .lista_arg span{
     display: block;
+}
+.btn_dia{
+    border: #1c9f73 1px solid;
 }
