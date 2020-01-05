@@ -4,11 +4,11 @@ ul{
 }
 
 .título{
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 .div_detalhes{
-    margin: 5%;
+    margin: 2%;
 }
 
 .item_nome{
@@ -21,20 +21,13 @@ ul{
 }
 
 .div_btn{
-    padding: 5%;
+    padding: 2%;
 }
 
 #detalhes_imagem_cidade{
     max-width: 100%;
-    max-height: 530px;
+    max-height: 448px;
 }
-
-/*.moldura_foto{
-    width: 400px;
-    height: 500px;
-}*/
-
-
 
 /*-----------------------------------PÁGINA PREVISÃO SIGNIFICATIVA-----------------------------*/
 .pag_prev_significativa{

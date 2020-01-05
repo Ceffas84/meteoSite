@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 //----Constantes
 const cor_meteo_verde_claro = "#84cab2"
 const cor_meteo_azul_claro = "#82befd"
@@ -248,5 +248,5 @@ function descritivo_3h (div_dia){
         $('.linha_dia').append(coluna_dia_clone);
         console.log("i -> ", i, " j-> ", j, "Data -> ", elemento.dt_txt, "Temp. -> ", temperatura, "Vel. Vento -> ", vento_vel, "Direcao Vento", vento_dir);
         }
-}
+}*/
 
