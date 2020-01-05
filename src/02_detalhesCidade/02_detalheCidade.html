@@ -6,52 +6,66 @@
     <meta content="Meteo site" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="../../css/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="../../js/detalhes.js" type="application/javascript"></script>
 
 </head>
 <body>
-<div class="container-fluid text-center">
+<div class="container-fluid text-center título">
     <div class="row">
         <div class="col-sm-12">
-            <h1>Detalhes da Cidade</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>Estado do Tempo em <span id="nome_cidade"></span></h3>
-            <span>
-                <button class="btn" type="button">Kelvin</button>
-                <button class="btn" type="button">Celsius</button>
-            </span>
+            <h1><span id="nome_cidade"></span></h1>
         </div>
     </div>
 </div>
 <div class="container text-center">
-    <div class="row">
-        <div class="col-sm-6">
-            <img src="../../imagens/Leiria.jpg" alt="Nome da Cidade" id="detalhes_imagem_cidade">
-        </div>
-        <div class="col-sm-1 text-right">
-            <div class="row tempo">
-                <ul class="detalhes_tempo_param">
-                    <li class="item_param">
-                        <p class="param"></p>
-                    </li>
-                </ul>
+    <div class="row div_detalhes">
+        <div class="col-sm-6 align-self-center">
+            <div id="moldura_foto">
+                <img id="detalhes_imagem_cidade">
+            </div>
+            <div class="div_btn text-center">
+                <button class="btn btn-secondary btns-favoritos">Adicionar aos favoritos</button>
             </div>
         </div>
-        <div class="col-sm-1 text-left">
-            <div class="row tempo">
-                <ul class="detalhes_tempo_valor">
-                    <li class="item_valor">
-                        <p class="valor"></p>
-                    </li>
-                </ul>
-            </div>
+        <div class="col-sm-6 align-self-center">
+            <ul class="nome_detalhes">
+                <li class="item">
+                    <span class="item_nome" id="nome_1">Temperatura Atual: </span>
+                    <p><span class="item_valor" id="valor_1"></span></p>
+                </li>
+                <li class="item">
+                    <span class="item_nome" id="nome_2">Máxima:
+                    <p></span><span class="item_valor" id="valor_2"></span></p>
+                </li>
+                <li class="item">
+                    <span class="item_nome" id="nome_3">Mínima:
+                    <p></span><span class="item_valor" id="valor_3"></span></p>
+                </li>
+                <li class="item">
+                    <span class="item_nome" id="nome_4">Vento:
+                    <p></span><span class="item_valor" id="valor_4"></span></p>
+                </li>
+                <li class="item">
+                    <span class="item_nome" id="nome_5">Pressão Atmosférica:
+                    <p></span><span class="item_valor" id="valor_5"></span></p>
+                </li>
+                <li class="item">
+                    <span class="item_nome" id="nome_6">Humidade:
+                    <p></span><span class="item_valor" id="valor_6"></span></p>
+                </li>
+                <li class="item">
+                    <span class="item_nome" id="nome_7">Coordenadas Geográficas:
+                    <p></span><span class="item_valor" id="valor_7"></span></p>
+                </li>
+                <div class="div_btn text-center">
+                    <span class="span_botões"><button class="btn btn-primary btns-detalhes">Converter</button></span>
+                </div>
+            </ul>
         </div>
     </div>
 </div>
