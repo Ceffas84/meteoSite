@@ -1,9 +1,15 @@
 "use strict";
 
+import {ponto_cardeal} from "./significativa";
+
+
 var item_param = null;
 var item_valor = null;
 var msg = JSON.parse(localStorage.getItem('tempo_actual'));
+
 console.log(typeof msg, msg);
+
+
 
 
 /*$(function () {
