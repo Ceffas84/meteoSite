@@ -154,7 +154,7 @@ let prev_dias_select = null;
 //----Função OnLoad Página Significativa
 //Prenche e clona os 5 dias da previsão
 function renderizar_significativa() {
-    fazer_pedido(PEDIR_SIGNIFICATIVA, 'significativa');
+    //fazer_pedido(PEDIR_SIGNIFICATIVA, 'significativa');
     let response_str = localStorage.getItem('significativa');
     console.log(typeof response_str, response_str);
     let msg = JSON.parse(response_str);
@@ -411,7 +411,16 @@ function actualiza_home(pos) {
     let x = $("#cbox_vis_home_" + (pos + 1)).is(":checked");
 
     if (x) {
-        var new_valor_vis_home = 1;
+        if (qtd_cidades_visiveis()>=6){
+            //console.log("Função actualiza_home qtd_cidades visiveis -> "+qtd_cidades_visiveis());
+            alert("Numero de cidades visiveis máximo já antingido");
+            var new_valor_vis_home = 0;
+            $('#cbox_vis_home_' + (pos + 1)).prop("checked",false);
+        }  else{
+            var new_valor_vis_home = 1;
+            //console.log("Função actualiza_home qtd_cidades visiveis -> "+qtd_cidades_visiveis());
+        }
+
     } else {
         new_valor_vis_home = 0;
     }
@@ -423,6 +432,7 @@ function actualiza_home(pos) {
     obj_lstorage_array_favoritos[pos].visivel_home = new_valor_vis_home;
     console.log(obj_lstorage_array_favoritos);
     localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+    console.log("Função actualiza_home qtd_cidades visiveis -> "+qtd_cidades_visiveis());
 }
 
 function adicionar_favorito() {
@@ -460,7 +470,7 @@ function adicionar_favorito() {
                 let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0, "str_cidade_api":str_cid_pais});
                 localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
             }
-            //window.location.href=window.location.href;
+            window.location.href=window.location.href;
         }
     });
     } else {
@@ -471,21 +481,27 @@ function adicionar_favorito() {
 }
 
 function qtd_cidades_visiveis (){
-    let obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    let str_obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    let obj_lstorage_array_favoritos = JSON.parse(str_obj_lstorage_array_favoritos);
     let contar = 0;
     for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
-        if (obj_lstorage_array_favoritos[i].visivel_home = 1 ) {
+        if (obj_lstorage_array_favoritos[i].visivel_home === 1 ) {
             contar++;
         }
     }
     return contar;
+    console.log("Função qtd_cidades_visiveis "+contar);
 }
 
 function existe_cidade (cidade){
     let str_obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
     let obj_lstorage_array_favoritos=JSON.parse(str_obj_lstorage_array_favoritos);
+    console.log(obj_lstorage_array_favoritos);
+    if (obj_lstorage_array_favoritos === null) {
+        return 0;
+    }
+
     console.log("Local storage -> "+obj_lstorage_array_favoritos);
-    
     let contar = 0;
     for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
         if (obj_lstorage_array_favoritos[i].str_cidade_api===cidade) {
