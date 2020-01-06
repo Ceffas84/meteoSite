@@ -2,12 +2,6 @@
 
 var autocomplete, place, foto_url;
 
-if (localStorage.getItem('unidade') == undefined){
-    localStorage.setItem('unidade', 'metric');
-}
-
-
-
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
@@ -18,25 +12,27 @@ const responseOK = 200;
 const PEDIR_TEMPO_ACTUAL = 1;
 const PEDIR_SIGNIFICATIVA = 2;
 
-function inicializar_autocomplete(){
+function inicializar_autocomplete(pedido, destino){
     var input = document.getElementById('searchTextField');
     autocomplete = new google.maps.places.Autocomplete(input);
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
-
-    })
+        fazer_pedido(pedido, destino, autocomplete);
+    });
 }
 
-function fazer_pedido(pedido,destinolocalstorage){
-    let pedido_construido = construir_pedido(pedido);
+
+
+function obter_obj_place(obj) {
+    place = autocomplete.getPlace();
+    return place;
+}
+
+function fazer_pedido(pedido,destinolocalstorage, obj_autocomplete){
+    let pedido_construido = construir_pedido(pedido, obj_autocomplete);
+    console.log(pedido_construido);
     $.ajax({
         method: 'GET',
-        async:false,
-        url: pedido_construido,
-        error: function(xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-        }
-
+        url: pedido_construido
     }).done(function (msg) {
         console.log('Entrou: ' + msg.cod);
         if(parseInt(msg.cod) !== responseOK){
@@ -44,25 +40,30 @@ function fazer_pedido(pedido,destinolocalstorage){
             alert("Erro: " + msg.cod + "\n" + msg.message);
         } else if(typeof Storage !== "undefined"){
             //código para webStorage Api
-            localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
+            if (pedido === PEDIR_TEMPO_ACTUAL){
+                console.log('Obj JSON: ' + typeof msg, msg);
+                localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
+                let obj_str = localStorage.getItem('tempo_atual');
+                console.log(obj_str);
+            }
+            if (pedido === PEDIR_SIGNIFICATIVA){
+                console.log(msg);
+                localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
+                console.log(localStorage.getItem('significativa'));
+            }
         } else {
             alert("Web Storage não suportado.");
         }
     });
 }
 
-function construir_pedido(tipo_pedido) {
+function construir_pedido(tipo_pedido, obj_autocomplete) {
+    let sitio = obter_obj_place(obj_autocomplete);
 
-    let city="";
-    if(autocomplete != undefined) {
-        let sitio = autocomplete.getPlace();
+    let city = sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
+               sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+    foto_url = sitio.photos[0].getUrl();
 
-        city = sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
-            sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
-        foto_url = sitio.photos[0].getUrl();
-    } else {
-        city = $("#nome_cidade").text();
-    }
     localStorage.setItem('foto_url', foto_url);
 
     let unidade = "&units="+localStorage.getItem('unidade');
@@ -86,14 +87,13 @@ function renderizar_pag_detalhes() {
     //console.log(typeof response_json, response_json);
     foto_url = localStorage.getItem('foto_url');
     //console.log(typeof foto_url, foto_url);
-    let unidade = localStorage.getItem('unidade') === 'metric' ? '.º C' : '.º K';
 
     $('#nome_cidade').text(response_json.name);
     $('#detalhes_imagem_cidade').attr('alt', response_json.name);
     $('#detalhes_imagem_cidade').attr('src', foto_url);
-    $('#valor_1').text(response_json.main.temp + unidade);
-    $('#valor_2').text(response_json.main.temp_max + unidade);
-    $('#valor_3').text(response_json.main.temp_min + unidade);
+    $('#valor_1').text(response_json.main.temp + '.º C');
+    $('#valor_2').text(response_json.main.temp_max + '.º C');
+    $('#valor_3').text(response_json.main.temp_min + '.º C');
     $('#valor_4').text(converter_para_kms_hora(response_json.wind.speed) + ' Kms/h');
     $('#valor_5').text(response_json.main.pressure + ' hPa');
     $('#valor_6').text(response_json.main.humidity + '%');
@@ -104,14 +104,25 @@ function converter_para_kms_hora(n) {
     n = (n*60*60)/1000;
     return n;
 }
-function GuardarUnidade() {
-  let un =  $("input[name='options']:checked").val();
-  if (un === 'metric') {
-      localStorage.setItem('unidade', 'metric');
-  } else {
-      localStorage.setItem('unidade', 'kelvin');
-  }
-}
+
+/*
+function converter(){
+    let unidade = localStorage.getItem('unidade');
+    if (unidade === 'metric'){
+        localStorage.setItem('unidade', 'kelvin');
+        $('#texto_btn_converter').text('Converter para Celcius');
+        $(function (){
+            renderizar();
+        });
+    } else {
+        localStorage.setItem('unidade', 'metric');
+        $('#texto_btn_converter').text('Converter para Kelvin');
+        $(function (){
+            renderizar();
+        });
+    }
+}*/
+
 
 //---------------------------------------------Página Singificativa--------------------------------------
 //----Constantes
@@ -150,6 +161,7 @@ let prev_dias_select = null;
 //----Função OnLoad Página Significativa
 //Prenche e clona os 5 dias da previsão
 function renderizar_significativa() {
+    fazer_pedido(PEDIR_SIGNIFICATIVA, 'significativa', autocomplete);
     let response_str = localStorage.getItem('significativa');
     console.log(typeof response_str, response_str);
     let msg = JSON.parse(response_str);

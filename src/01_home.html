@@ -23,7 +23,7 @@
     <script src="../js/main.js" type="application/javascript"></script>
 
 </head>
-<body class="pag_home" onload="inicializar_autocomplete(PEDIR_TEMPO_ACTUAL, 'tempo_atual')">
+<body class="pag_home" onload="inicializar_autocomplete()">
     <header>
         <div class="container">
             <div class="row">
@@ -67,10 +67,18 @@
         <div class="row">
             <div class="col text-center" >
                 <p><span>Pesquisa por cidade</span>
-                    <form id="formNome" action="02_detalheCidade.html" method="GET">
+                <form id="formNome" onsubmit="fazer_pedido(PEDIR_TEMPO_ACTUAL, 'tempo_atual');" action="02_detalheCidade.html" method="GET">
                         <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
                         <span class="submit"> <input type="submit"></span>
-                    </form>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="options" id="celcius" value="metric" onchange="GuardarUnidade();" checked> ºC
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="kelvin" onchange="GuardarUnidade();" value="kelvin"> ºK
+                    </label>
+                </div>
+                </form>
                 </p>
             </div>
         </div>
