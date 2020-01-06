@@ -47,151 +47,101 @@
     <div class="card-body">
         <ul class="list-group lista_mae">
             <li class="list-group-item lista_filho row">
-
                 <div class="container-fluid">
                     <div class="row">
 <!--------------------------------------------------------------------------------------------------------------------->
-                        <div class="col-sm-3">
-                            <button class="btn btn-info btn_rm_fav">Remover favorito</button>
+                        <div class="col-sm-2 media_cell">
+<!--  1  -->                  <button class="btn btn-info btn_rm_fav">Remover favorito</button>
                         </div>
-
-                        <div class="col-sm-6">
-
+<!--------------------------------------------------------------------------------------------------------------------->
+                        <div class="col-sm-8 media_cell">
                             <div class="row">
-
-                                <div class="col-sm-2">
-
-
+<!--------------------------------------------------------------------------------------------------------------------->
+                                <div class="fav_box_cidade fav_box col-sm-2 text-center">
+        <!--  *1 -->                <span class="cidade"></span>
                                 </div>
+<!--------------------------------------------------------------------------------------------------------------------->
+                                <div class="col-sm-4 fav_box_temperatura fav_box col-sm-3">
+                                    <div class="row">
+        <!--  *2 -->
 
-                                <div class="col-sm-4">
+                                        <div class="fav_box_img col-sm-4">
+                                            <img src="../imagens/termometro.png" alt="moinho">
+                                        </div>
 
+                                        <div class="fav_box_dados1 col-sm-8">
+
+                                            <table width="100%">
+                                                <tr>
+                                                    <td class="bg-info text-center"><span style="" class="temp_min "></span></td>
+                                                    <td width="2%"></td>
+                                                    <td class="bg-danger text-center" width="48%"><span class="temp_max"></span></td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
                                 </div>
+<!--------------------------------------------------------------------------------------------------------------------->
+                                <div class="fav_box_vento fav_box col-sm-3">
+                                    <div class="row">
 
-                                <div class="col-sm-3">
+                                        <div class="fav_box_img col-sm-4">
+                                            <img src="../imagens/windmill.png" alt="moinho">
+                                        </div>
 
+                                        <div class="fav_box_dados col-sm-8">
+                                            <div><span class="vento_vel"></span></div>
+                                            <div><span class="vento_dir"></span></div>
+                                        </div>
+
+
+                                    </div>
                                 </div>
+<!--------------------------------------------------------------------------------------------------------------------->
+                                <div class="fav_box_humidade fav_box col-sm-3">
+                                    <div class="row">
 
-                                <div class="fav_box fav_box_humidade col-sm-3">
+                                        <div class="fav_box_img col-sm-4">
+                                            <img src="../imagens/humidade.png" alt="humidade">
+                                        </div>
 
-                                    <div class="fav_box_humidade fav_box col-sm-3">
-
-                                        <div class="row">
-                                            <div class="fav_box_img col-sm-6">
-                                                <img src="../imagens/humidade.png" alt="humidade">
-                                            </div>
-                                            <div class="fav_box_dados col-sm-6">
-                                                <span class="humidade"></span>
-                                            </div>
+                                        <div class="fav_box_dados col-sm-8">
+        <!-- *4 -->                         <span class="humidade"></span>
                                         </div>
 
                                     </div>
 
-
                                 </div>
-
+<!--------------------------------------------------------------------------------------------------------------------->
                             </div>
-
                         </div>
-
-                        <div class="col-sm-3">
+<!--------------------------------------------------------------------------------------------------------------------->
+                        <div class="col-sm-2 media_cell">
                             <div class="custom-control custom-checkbox">
                                 <div class="visto">
-                                    <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
-                                    <label class="custom-control-label cbox_label_vis_home">Visivel Página Home</label>
+<!-- 3 -->                          <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
+                                    <label class="custom-control-label cbox_label_vis_home">Visível Home</label>
                                 </div>
                             </div>
                         </div>
-
+<!--------------------------------------------------------------------------------------------------------------------->
                     </div>
-
                 </div>
             </li>
+
         </ul>
     </div>
+
 </div>
 
-
 <!--
-                <div class="container">
-                    <div class=" media_cell col-sm-3">
-                        <button class="btn btn-info btn_rm_fav">Remover favorito</button>
-                    </div>
-
-                    <div class="media_cell col-sm-6">
-
-                        <div class="row">
-                            <div class="fav_box_cidade fav_box col-sm-3">
-                                <div class="fav_box_dados">
-                                    <span class="cidade"></span>
-                                </div>
-                            </div>
-
-
-                            <div class="fav_box_temperatura fav_box col-sm-3">
-
-                                <div class="row">
-                                    <div class="fav_box_img col-sm-6">
-                                        <img src="../imagens/termometro.png" alt="moinho">
-                                    </div>
-                                    <div class="fav_box_dados col-sm-6">
-                                        <span class="temp_max bg-danger"></span>
-                                        <span class="temp_min bg-primary"></span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="fav_box_vento fav_box col-sm-3">
-
-                                <div class="row">
-                                    <div class="fav_box_img col-sm-6">
-                                        <img src="../imagens/windmill.png" alt="moinho">
-                                    </div>
-                                    <div class="fav_box_dados col-sm-6">
-                                        <span class="vento_vel"></span>
-                                        <span class="vento_dir"></span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="fav_box_humidade fav_box col-sm-3">
-
-                                <div class="row">
-                                    <div class="fav_box_img col-sm-6">
-                                        <img src="../imagens/humidade.png" alt="humidade">
-                                    </div>
-                                    <div class="fav_box_dados col-sm-6">
-                                        <span class="humidade"></span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="media_cell col-sm-3">
-                        <div class="custom-control custom-checkbox">
-                            <div class="visto">
-                                <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
-                                <label class="custom-control-label cbox_label_vis_home">Visivel Página Home</label>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
--->
-
-
-
-
-
 <button onclick="ler_array()">Ler array</button>
 <button onclick="apagar_favorito()">Apagar linha</button>
 <button onclick="limpar_array_favoritos()">Limpar array favoritos</button>
 <button onclick="adicionar_favorito()">Adicionar favorito</button>
+-->
 
 </body>
 </html>
