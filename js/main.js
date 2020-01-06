@@ -257,9 +257,9 @@ function atribuir_dias() {
 function ponto_cardeal (grau){
     if (grau>=0 && grau <=359){
         for (let i=0; i<PONTOS_CARDEAIS.length; i++) {
-            console.log(grau, PONTOS_CARDEAIS.length);
+            //console.log(grau, PONTOS_CARDEAIS.length);
             if (grau > PONTOS_CARDEAIS[i].grau_ini && grau <= PONTOS_CARDEAIS[i].grau_fim) {
-                console.log(i + " -> " + PONTOS_CARDEAIS[i].ponto);
+                //console.log(i + " -> " + PONTOS_CARDEAIS[i].ponto);
                 return PONTOS_CARDEAIS[i].ponto;
             }
         }
@@ -325,7 +325,7 @@ function esconde_mostra_cont_signif(div_dia) {
 //Preenche o conteudo da tabela de forma dinamica
 function descritivo_3h (div_dia){
     let response_str = localStorage.getItem('significativa');
-    //console.log(typeof response_str, response_str);
+    console.log(typeof response_str, response_str);
     let msg = JSON.parse(response_str);
     //console.log(typeof msg, msg);
     $('.linha_hora').html('');
@@ -378,6 +378,7 @@ let item_media = null;
 let array_fav = [];
 let len_array_fav;
 let str_cid;
+let str_cid_pais;
 let str_url;
 
 
@@ -397,7 +398,6 @@ function apagar_favorito(pos) {
     window.location.href=window.location.href;
 
 }
-
 let obj_lstorage_array_favoritos = [];
 
 function actualiza_home(pos) {
@@ -423,17 +423,19 @@ function actualiza_home(pos) {
 function adicionar_favorito() {
     console.log("Função adicionar favorito");
 
-    place= autocomplete.getPlace();
+    place = autocomplete.getPlace();
     console.log(place);
     if (place===undefined){
         alert("Não selecionou nenhuma cidade");
         return;
     }
-    str_cid = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," + place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+    str_cid_pais = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," + place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+    console.log("Função adicionar pedido -> "+str_cid_pais);
+    if (existe_cidade(str_cid_pais)===0){
 
     $.ajax({
         method: 'GET',
-        url: construir_pedido_por_cidade(PEDIR_TEMPO_ACTUAL, str_cid)
+        url: construir_pedido_por_cidade(PEDIR_TEMPO_ACTUAL, str_cid_pais)
     }).done(function (msg) {
         if(parseInt(msg.cod) !== responseOK) {
             console.log(msg.cod);
@@ -442,24 +444,51 @@ function adicionar_favorito() {
         }
         else {
             console.log(msg);
-            console.log(str_cid);
+            console.log(str_cid_pais);
             let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
             if (str_lstorage_array_favoritos === null) {
-                let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0});
+                let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0, "str_cidade_api":str_cid_pais});
                 console.log(obj_lstorage_array_favoritos);
                 localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
             } else {
                 obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
-                let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0});
+                let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0, "str_cidade_api":str_cid_pais});
                 localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
             }
-            window.location.href=window.location.href;
+            //window.location.href=window.location.href;
         }
     });
+    } else {
+        alert("A cidade selecionada já existe nos favoritos");
+    }
 
 
 }
 
+function qtd_cidades_visiveis (){
+    let obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    let contar = 0;
+    for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
+        if (obj_lstorage_array_favoritos[i].visivel_home = 1 ) {
+            contar++;
+        }
+    }
+    return contar;
+}
+
+function existe_cidade (cidade){
+    let str_obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    let obj_lstorage_array_favoritos=JSON.parse(str_obj_lstorage_array_favoritos);
+    console.log("Local storage -> "+obj_lstorage_array_favoritos);
+    
+    let contar = 0;
+    for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
+        if (obj_lstorage_array_favoritos[i].str_cidade_api===cidade) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 function limpar_array_favoritos() {
     localStorage.removeItem("array_favoritos");
@@ -472,19 +501,15 @@ function ler_array (){
         console.log(elemento.cidade);
         console.log(elemento.visivel_home);
     });
-
 }
 
 function construir_pedido_por_cidade(tipo_pedido,city) {
-
     let unidade = "&units="+localStorage.getItem('unidade');
-
     if (tipo_pedido === 1){
         let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
         console.log(pedido_tempo_actual);
         return pedido_tempo_actual;
     }
-
     if (tipo_pedido === 2){
         let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
         return pedido_significativa;
@@ -509,7 +534,7 @@ function renderizar_pag_favoritos(){
 
 
             let json = obj_lstorage_array_favoritos[i].cidade;
-            console.log(json);
+            //console.log(json);
 
             let item_media_clone = item_media.clone();
             $('.btn_rm_fav',item_media_clone).attr("id","btn_rm_fav_"+(i+1));
@@ -525,7 +550,6 @@ function renderizar_pag_favoritos(){
             }
 
             $('.cbox_input_vis_home',item_media_clone).attr('checked',load_cbox);
-
             $('.cbox_label_vis_home',item_media_clone).attr("for","cbox_vis_home_"+(i+1));
 
 
@@ -533,8 +557,9 @@ function renderizar_pag_favoritos(){
             $('.temp_max', item_media_clone).text(json.main.temp_max + 'º C');
             $('.temp_min', item_media_clone).text(json.main.temp_min + 'º C');
             $('.vento_vel', item_media_clone).text(parseInt(json.wind.speed * 3.6) + ' Km/h');
+            $('.vento_dir', item_media_clone).text(ponto_cardeal(parseInt(json.wind.deg)));
+            //console.log("Direcao vento -> "+json.wind.deg);
             $('.humidade', item_media_clone).text(json.main.humidity + '%');
-
             $('.lista_mae').append(item_media_clone);
         }
     }

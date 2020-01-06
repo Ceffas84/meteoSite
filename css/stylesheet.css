@@ -137,23 +137,14 @@ ul{
     margin: 20px;
 }
 
+.fav_box_img{
+    align-self: center;
+}
 
 .fav_box_img img{
-    max-height: 50px;
-}
+    max-height: 30px;
+    max-width: 30px;
 
-.fav_box{
-    display: table-cell;
-    width: 10%;
-}
-.fav_box_dados{
-    display: table-cell;
-    width: 70%;
-
-}
-.fav_box_img{
-    display: table-cell;
-    width: 5%;
 }
 .custom-checkbox{
     display: flex;
