@@ -6,27 +6,24 @@
     <meta name="description" content="Meteo site">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Google API -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ2rZvZIQ0ZNnnJnFPd-rdfdjtgmnD444&libraries=places"></script>
-    <!-- JQuery -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANhz5bwr_GeVlMzJKKYpzwup4S7N6fwgAg&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Bootstrap Popper/JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+
     <!-- Our Files -->
     <link href="../css/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="../js/main.js" type="application/javascript"></script>
 
 </head>
-
-<body class="pag_home" onload="inicializar_autocomplete(1,'tempo_atual')">
+<body class="pag_home" onload="inicializar_autocomplete(PEDIR_TEMPO_ACTUAL, 'tempo_atual')">
     <header>
         <div class="container">
             <div class="row">
@@ -38,7 +35,6 @@
                 </div>
             </div>
         </div>
-
     </header>
 
     <div class="container" id="lista_img">
@@ -46,10 +42,23 @@
             <div class="col-sm">
                 <p>imagem_01</p>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <button class="btn_fav"><a href="04_gestaoFavoritos.html">Gestao Favoritos</a></button>
+            <div class="col-sm-1">
+                <p>imagem_02</p>
+            </div>
+            <div class="col-sm-1">
+                <p>imagem_03</p>
+            </div>
+            <div class="col-sm-1">
+                <p>imagem_04</p>
+            </div>
+            <div class="col-sm-1">
+                <p>imagem_05</p>
+            </div>
+            <div class="col-sm-1">
+                <p>imagem_06</p>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-primary" href="04_gestaoFavoritos.html">Gestao Favoritos</a>
             </div>
         </div>
     </div>
