@@ -2,103 +2,202 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Meteo Site - Home</title>
+    <title>Meteo Site - Favoritos</title>
     <meta name="description" content="Meteo site">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ2rZvZIQ0ZNnnJnFPd-rdfdjtgmnD444&libraries=places"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
-    <script src="../js/main.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Google API -->
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ2rZvZIQ0ZNnnJnFPd-rdfdjtgmnD444&libraries=places"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap Popper/JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <!-- Our Files -->
+    <link href="../css/stylesheet.css" rel="stylesheet" type="text/css">
+    <script src="../js/main.js" type="application/javascript"></script>
+
 </head>
 
 <body onload="renderizar_pag_favoritos()">
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <p><span>Pesquisa por cidade</span>
 
-<div class="jumbotron box-jumbotron">
-    <div class="box-jumbotron-logo">
-        <img class="img_fav" src="../imagens/logo_meteosite.png" alt="logo site">
-    </div>
+                <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
 
-    <div class="box-jumbotron-pesquisa text-center">
-        <p>Gestão favoritos</p>
-        <span>Pesquisa</span>
-        <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
-    </div>
+                <button class="btn btn-info btn_add_fav" onclick="adicionar_favorito()">Adicionar aos favoritos</button>
 
-</div>
-
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Os seus favoritos</h3>
-    </div>
-    <div class="panel-body">
-        <div class="mediaGroup">
-            <ul class="media-list">
-
-                <li class="media">
-                    <div class="media-left media_cell">
-                        <button class="btn btn-default">Remover dos Favoritos</button>
-                    </div>
-                    <div class="media-body media_cell">
-
-                        <div class="fav_box_cidade fav_box">
-
-                            <div class="fav_box_dados">
-                                <span class="cidade"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="fav_box_temperatura fav_box">
-                            <div class="fav_box_img">
-                                <img src="../imagens/termometro.png" alt="termometro">
-                            </div>
-                            <div class="fav_box_dados">
-                                <span class="temp_max bg-danger"></span>
-                                <span class="temp_min bg-primary"></span>
-                            </div>
-                        </div>
-
-                        <div class="fav_box_vento fav_box">
-                            <div class="fav_box_img">
-                                <img src="../imagens/windmill.png" alt="moinho">
-                            </div>
-                            <div class="fav_box_dados">
-                                <span class="vento_vel"></span>
-                                <span class="vento_dir"></span>
-                            </div>
-                        </div>
-
-                        <div class="fav_box_humidade fav_box">
-                            <div class="fav_box_img">
-                                <img src="../imagens/humidade.png" alt="humidade">
-                            </div>
-                            <div class="fav_box_dados">
-                                <span class="humidade"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="media-rigth media_cell">
-                        <div class="custom-control custom-checkbox">
-                            <div class="visto">
-                                <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                                <label class="custom-control-label" for="defaultUnchecked">Visivel Home</label>
-                            </div>
-                        </div>
-                    </div>
-
-                </li>
-            </ul>
+            </p>
         </div>
     </div>
 </div>
 
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Os seus favoritos</h3>
+    </div>
+    <div class="card-body">
+        <ul class="list-group lista_mae">
+            <li class="list-group-item lista_filho row">
+
+                <div class="container-fluid">
+                    <div class="row">
+<!--------------------------------------------------------------------------------------------------------------------->
+                        <div class="col-sm-3">
+                            <button class="btn btn-info btn_rm_fav">Remover favorito</button>
+                        </div>
+
+                        <div class="col-sm-6">
+
+                            <div class="row">
+
+                                <div class="col-sm-2">
+
+
+                                </div>
+
+                                <div class="col-sm-4">
+
+                                </div>
+
+                                <div class="col-sm-3">
+
+                                </div>
+
+                                <div class="fav_box fav_box_humidade col-sm-3">
+
+                                    <div class="fav_box_humidade fav_box col-sm-3">
+
+                                        <div class="row">
+                                            <div class="fav_box_img col-sm-6">
+                                                <img src="../imagens/humidade.png" alt="humidade">
+                                            </div>
+                                            <div class="fav_box_dados col-sm-6">
+                                                <span class="humidade"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="custom-control custom-checkbox">
+                                <div class="visto">
+                                    <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
+                                    <label class="custom-control-label cbox_label_vis_home">Visivel Página Home</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!--
+                <div class="container">
+                    <div class=" media_cell col-sm-3">
+                        <button class="btn btn-info btn_rm_fav">Remover favorito</button>
+                    </div>
+
+                    <div class="media_cell col-sm-6">
+
+                        <div class="row">
+                            <div class="fav_box_cidade fav_box col-sm-3">
+                                <div class="fav_box_dados">
+                                    <span class="cidade"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="fav_box_temperatura fav_box col-sm-3">
+
+                                <div class="row">
+                                    <div class="fav_box_img col-sm-6">
+                                        <img src="../imagens/termometro.png" alt="moinho">
+                                    </div>
+                                    <div class="fav_box_dados col-sm-6">
+                                        <span class="temp_max bg-danger"></span>
+                                        <span class="temp_min bg-primary"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="fav_box_vento fav_box col-sm-3">
+
+                                <div class="row">
+                                    <div class="fav_box_img col-sm-6">
+                                        <img src="../imagens/windmill.png" alt="moinho">
+                                    </div>
+                                    <div class="fav_box_dados col-sm-6">
+                                        <span class="vento_vel"></span>
+                                        <span class="vento_dir"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="fav_box_humidade fav_box col-sm-3">
+
+                                <div class="row">
+                                    <div class="fav_box_img col-sm-6">
+                                        <img src="../imagens/humidade.png" alt="humidade">
+                                    </div>
+                                    <div class="fav_box_dados col-sm-6">
+                                        <span class="humidade"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="media_cell col-sm-3">
+                        <div class="custom-control custom-checkbox">
+                            <div class="visto">
+                                <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
+                                <label class="custom-control-label cbox_label_vis_home">Visivel Página Home</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+-->
+
+
+
+
+
+<button onclick="ler_array()">Ler array</button>
+<button onclick="apagar_favorito()">Apagar linha</button>
+<button onclick="limpar_array_favoritos()">Limpar array favoritos</button>
+<button onclick="adicionar_favorito()">Adicionar favorito</button>
 
 </body>
 </html>

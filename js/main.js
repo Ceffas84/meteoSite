@@ -1,5 +1,6 @@
 'use strict';
 
+//---------------------------------------------Página Home--------------------------------------
 if(typeof Storage !== "undefined"){
     //código para webStorage Api
     localStorage.setItem('unidade', 'metric');
@@ -14,37 +15,41 @@ const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 const PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME = 0;
 const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 2;
+//const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 3;
 const responseOK = 200;
 const PEDIR_TEMPO_ACTUAL = 1;
 const PEDIR_SIGNIFICATIVA = 2;
 
-function inicilizar_autocomplete() {
+function inicilizar_autocomplete(pedido,destino) {
     var input = document.getElementById('searchTextField');
     autocomplete = new google.maps.places.Autocomplete(input);
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        fazer_pedido(PEDIR_TEMPO_ACTUAL);
+        fazer_pedido(1,"tempo_atual");
     });
 }
 
-function fazer_pedido(pedido){
+
+
+function fazer_pedido(pedido,destinolocalstorage){
     let pedido_construido = construir_pedido(pedido);
     $.ajax({
         method: 'GET',
         url: pedido_construido
     }).done(function (msg) {
         if(parseInt(msg.cod) !== responseOK){
+            console.log(msg.cod);
             alert("Erro: " + msg.cod + "\n" + msg.message);
         } else if(typeof Storage !== "undefined"){
             //código para webStorage Api
             if (pedido === PEDIR_TEMPO_ACTUAL) {
                 console.log('Obj JSON: ' + typeof msg, msg);
-                localStorage.setItem('tempo_atual', JSON.stringify(msg));
+                localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
                 let obj_str = localStorage.getItem('tempo_atual');
                 console.log(obj_str);
             }
             if (pedido === PEDIR_SIGNIFICATIVA){
                 console.log(msg);
-                localStorage.setItem('significativa', JSON.stringify(msg));
+                localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
                 console.log(localStorage.getItem('significativa'));
             }
         } else {
@@ -55,9 +60,11 @@ function fazer_pedido(pedido){
 
 function construir_pedido(pedido) {
     place = autocomplete.getPlace();
+
     let city = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
         place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
     foto_url = place.photos[0].getUrl();
+
     localStorage.setItem('foto_url', foto_url);
     console.log(typeof foto_url, foto_url);
     let unidade = "&units="+localStorage.getItem('unidade');
@@ -73,6 +80,7 @@ function construir_pedido(pedido) {
     }
 }
 
+//---------------------------------------------Página Detalhes--------------------------------------
 function renderizar_pag_detalhes() {
     let response_str = localStorage.getItem('tempo_atual');
     console.log(typeof response_str, response_str);
@@ -116,6 +124,8 @@ function converter(){
     }
 }*/
 
+
+//---------------------------------------------Página Singificativa--------------------------------------
 //----Constantes
 const cor_meteo_verde_claro = "#84cab2";
 const cor_meteo_azul_claro = "#82befd";
@@ -176,7 +186,6 @@ function renderizar_significativa() {
             mes = date_time.getMonth(),
             ano = date_time.getFullYear(),
             dia_sem = date_time.getDay();
-        let temperatura = (dados_json.main.temp).toFixed(0);
         let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
         let vento_dir = dados_json.wind.deg;
         let humidade = dados_json.main.humidity;
@@ -184,7 +193,6 @@ function renderizar_significativa() {
         let temp_max = json_min_max[i].temp_max;
 
         $(item_bloco_dia_clone).attr("id","dia_"+i);
-        $('.btn_dia',item_bloco_dia_clone).addClass("btn_dia");
         $('.btn_dia',item_bloco_dia_clone).attr("id","btn_dia_"+i);
         $('.btn_dia',item_bloco_dia_clone).attr("onclick","esconde_mostra_cont_signif("+i+")");
         $('.data',item_bloco_dia_clone).text(dia + "/" + meses_abrv[mes]);
@@ -272,7 +280,7 @@ function ponto_cardeal (grau){
 //-------->Limpa também a formatação verde do botão do dia anteriormente selecionado
 function esconde_cont_prev_dias() {
     prev_dias_select.hide();
-    btn_dia_select.css("background-color", "powderblue");
+    btn_dia_select.css("background-color", "#fff");
 }
 
 //---->Função que mostra o Container Previsão 3h
@@ -364,25 +372,175 @@ function descritivo_3h (div_dia){
     }
 }
 
-let json_string = localStorage.getItem("tempo_atual");
-let json = JSON.parse(json_string);
+
+
+//let json_string = localStorage.getItem("tempo_atual");
+//let json = JSON.parse(json_string);
 let item_media = null;
 
-let array_favoritos = [{}];
+let array_fav = [];
+let len_array_fav;
+let str_cid;
+let str_url;
 
 
+function inicializar_autocomplete_pag_fav() {
+    let input = document.getElementById('searchTextField');
+    autocomplete = new google.maps.places.Autocomplete(input);
+    //google.maps.event.addListener(autocomplete, 'place_changed', function () {
+    //});
+}
 
-function renderizar_pag_favoritos(){
-    item_media = $('.media').clone();
-    $('.media-list').html('');
+function apagar_favorito(pos) {
 
-    console.log(json);
-    let item_media_clone = item_media.clone();
-    $('.cidade',item_media_clone).text(json.name);
-    $('.temp_max',item_media_clone).text(json.main.temp_max + '.º C');
-    $('.temp_min',item_media_clone).text(json.main.temp_min + '.º C');
-    $('.vento_vel',item_media_clone).text((json.wind.speed*3.6) + ' Kms/h');
-    $('.humidade',item_media_clone).text(json.main.humidity + '%');
-    $('.media-list').append(item_media_clone);
+    let lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    array_fav = JSON.parse(lstorage_array_favoritos);
+    array_fav.splice(pos,1);
+    localStorage.setItem('array_favoritos',JSON.stringify(array_fav));
+    window.location.href=window.location.href;
 
 }
+
+let obj_lstorage_array_favoritos = [];
+
+function actualiza_home(pos) {
+    console.log("Função actualiza_home")
+
+    let x = $("#cbox_vis_home_" + (pos + 1)).is(":checked");
+
+    if (x) {
+        var new_valor_vis_home = 1;
+    } else {
+        new_valor_vis_home = 0;
+    }
+    console.log("Valor de x -> "+x);
+    console.log("new_valor_vis_home -> "+new_valor_vis_home);
+
+    let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+    obj_lstorage_array_favoritos[pos].visivel_home = new_valor_vis_home;
+    console.log(obj_lstorage_array_favoritos);
+    localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+}
+
+function adicionar_favorito() {
+    console.log("Função adicionar favorito");
+
+    place= autocomplete.getPlace();
+    console.log(place);
+    if (place===undefined){
+        alert("Não selecionou nenhuma cidade");
+        return;
+    }
+    str_cid = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," + place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+
+    $.ajax({
+        method: 'GET',
+        url: construir_pedido_por_cidade(PEDIR_TEMPO_ACTUAL, str_cid)
+    }).done(function (msg) {
+        if(parseInt(msg.cod) !== responseOK) {
+            console.log(msg.cod);
+            alert("Erro: " + msg.cod + "\n" + msg.message);
+            return;
+        }
+        else {
+            console.log(msg);
+            console.log(str_cid);
+            let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+            if (str_lstorage_array_favoritos === null) {
+                let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0});
+                console.log(obj_lstorage_array_favoritos);
+                localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+            } else {
+                obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+                let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({"cidade":msg,"visivel_home":0});
+                localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+            }
+            window.location.href=window.location.href;
+        }
+    });
+
+
+}
+
+
+function limpar_array_favoritos() {
+    localStorage.removeItem("array_favoritos");
+}
+function ler_array (){
+    let lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    obj_lstorage_array_favoritos = JSON.parse(lstorage_array_favoritos);
+    console.log("Função ler array");
+    obj_lstorage_array_favoritos.forEach(function (elemento) {
+        console.log(elemento.cidade);
+        console.log(elemento.visivel_home);
+    });
+
+}
+
+function construir_pedido_por_cidade(tipo_pedido,city) {
+
+    let unidade = "&units="+localStorage.getItem('unidade');
+
+    if (tipo_pedido === 1){
+        let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
+        console.log(pedido_tempo_actual);
+        return pedido_tempo_actual;
+    }
+
+    if (tipo_pedido === 2){
+        let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
+        return pedido_significativa;
+    }
+}
+
+function renderizar_pag_favoritos(){
+
+    item_media = $('.lista_filho').clone();
+    $('.lista_mae').html('');
+
+    let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    let obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+    console.log("Conteudo local storage");
+    console.log(obj_lstorage_array_favoritos);
+
+    if (obj_lstorage_array_favoritos===null) {
+        console.log("Array vazio");
+    } else {
+
+        for (let i = 0; i < obj_lstorage_array_favoritos.length; i++) {
+
+
+            let json = obj_lstorage_array_favoritos[i].cidade;
+            console.log(json);
+
+            let item_media_clone = item_media.clone();
+            $('.btn_rm_fav',item_media_clone).attr("id","btn_rm_fav_"+(i+1));
+            $('.btn_rm_fav',item_media_clone).attr("onclick","apagar_favorito("+i+")");
+
+            $('.cbox_input_vis_home',item_media_clone).attr("id","cbox_vis_home_"+(i+1));
+            $('.cbox_input_vis_home',item_media_clone).attr("onclick","actualiza_home("+i+")");
+
+            if (obj_lstorage_array_favoritos[i].visivel_home===0){
+                var load_cbox = false;
+            } else {
+                load_cbox = true;
+            }
+
+            $('.cbox_input_vis_home',item_media_clone).attr('checked',load_cbox);
+
+            $('.cbox_label_vis_home',item_media_clone).attr("for","cbox_vis_home_"+(i+1));
+
+
+            $('.cidade', item_media_clone).text(json.name);
+            $('.temp_max', item_media_clone).text(json.main.temp_max + 'º C');
+            $('.temp_min', item_media_clone).text(json.main.temp_min + 'º C');
+            $('.vento_vel', item_media_clone).text(parseInt(json.wind.speed * 3.6) + ' Km/h');
+            $('.humidade', item_media_clone).text(json.main.humidity + '%');
+
+            $('.lista_mae').append(item_media_clone);
+        }
+    }
+    inicializar_autocomplete_pag_fav();
+}
+
