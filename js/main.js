@@ -1,6 +1,5 @@
 'use strict';
 
-
 var autocomplete, place, foto_url;
 
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -20,16 +19,6 @@ function inicializar_autocomplete(pedido, destino){
         fazer_pedido(pedido, destino);
     });
 }
-
-function inicilizar_autocomplete(pedido,destino) {
-    var input = document.getElementById('searchTextField');
-    autocomplete = new google.maps.places.Autocomplete(input);
-    google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        fazer_pedido(1,"tempo_atual");
-    });
-}
-
-
 
 function fazer_pedido(pedido,destinolocalstorage){
     let pedido_construido = construir_pedido(pedido);
