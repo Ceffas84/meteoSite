@@ -1,4 +1,3 @@
-
 ul{
     list-style-type: none;
     padding-left: 10px;
@@ -111,7 +110,7 @@ ul{
     width: 100%;
     margin: 3px;
 }
-/*-------------------*/
+ /*-------------------*/
 .linha_blocos{
     margin-top: 20px;
     margin-bottom: 20px;
@@ -122,10 +121,6 @@ ul{
 }
 .lista_arg span{
     display: block;
-}
-
-.tabela_mae {
-    background-color: #84cab2;
 }
 
 
