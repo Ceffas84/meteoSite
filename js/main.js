@@ -528,7 +528,6 @@ function renderizar_pag_favoritos(){
             }
 
             $('.cbox_input_vis_home',item_media_clone).attr('checked',load_cbox);
-
             $('.cbox_label_vis_home',item_media_clone).attr("for","cbox_vis_home_"+(i+1));
 
 
@@ -536,8 +535,9 @@ function renderizar_pag_favoritos(){
             $('.temp_max', item_media_clone).text(json.main.temp_max + 'º C');
             $('.temp_min', item_media_clone).text(json.main.temp_min + 'º C');
             $('.vento_vel', item_media_clone).text(parseInt(json.wind.speed * 3.6) + ' Km/h');
+            $('.vento_dir', item_media_clone).text(ponto_cardeal(parseInt(json.wind.deg)));
+            console.log("Direcao");
             $('.humidade', item_media_clone).text(json.main.humidity + '%');
-
             $('.lista_mae').append(item_media_clone);
         }
     }
