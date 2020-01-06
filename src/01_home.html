@@ -7,16 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ2rZvZIQ0ZNnnJnFPd-rdfdjtgmnD444&libraries=places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANhz5bwr_GeVlMzJKKYpzwup4S7N6fwgAg&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href="../css/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="../js/main.js" type="application/javascript"></script>
-
 </head>
-<body class="pag_home" onload="inicilizar_autocomplete()">
+<body class="pag_home" onload="inicializar_autocomplete(PEDIR_TEMPO_ACTUAL, 'tempo_atual')">
     <header>
         <div class="container">
             <div class="row">
@@ -28,7 +27,6 @@
                 </div>
             </div>
         </div>
-
     </header>
 
     <div class="container" id="lista_img">
@@ -52,7 +50,7 @@
                 <p>imagem_06</p>
             </div>
             <div class="col-sm-2">
-                <button class="btn_fav"><a href="04_gestaoFavoritos.html">Gestao Favoritos</a></button>
+                <a class="btn btn-primary" href="04_gestaoFavoritos.html">Gestao Favoritos</a>
             </div>
         </div>
 

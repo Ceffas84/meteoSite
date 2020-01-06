@@ -1,11 +1,11 @@
 'use strict';
 
-if(typeof Storage !== "undefined"){
+/*if(typeof Storage !== "undefined"){
     //código para webStorage Api
     localStorage.setItem('unidade', 'metric');
 } else {
     alert("Web Storage não suportado.");
-}
+}*/
 
 var autocomplete, place, foto_url;
 
@@ -18,27 +18,29 @@ const responseOK = 200;
 const PEDIR_TEMPO_ACTUAL = 1;
 const PEDIR_SIGNIFICATIVA = 2;
 
-function inicilizar_autocomplete() {
+function inicializar_autocomplete(pedido, destino){
     var input = document.getElementById('searchTextField');
     autocomplete = new google.maps.places.Autocomplete(input);
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        fazer_pedido(PEDIR_TEMPO_ACTUAL);
+        fazer_pedido(pedido, destino);
     });
 }
 
-function fazer_pedido(pedido){
+function fazer_pedido(pedido, destinolocalstorage){
     let pedido_construido = construir_pedido(pedido);
+    console.log(pedido_construido);
     $.ajax({
         method: 'GET',
         url: pedido_construido
     }).done(function (msg) {
+        console.log('Entrou: ' + msg.cod);
         if(parseInt(msg.cod) !== responseOK){
             alert("Erro: " + msg.cod + "\n" + msg.message);
         } else if(typeof Storage !== "undefined"){
             //código para webStorage Api
-            if (pedido === PEDIR_TEMPO_ACTUAL) {
+            if (pedido === PEDIR_TEMPO_ACTUAL){
                 console.log('Obj JSON: ' + typeof msg, msg);
-                localStorage.setItem('tempo_atual', JSON.stringify(msg));
+                localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
                 let obj_str = localStorage.getItem('tempo_atual');
                 console.log(obj_str);
             }
@@ -53,21 +55,21 @@ function fazer_pedido(pedido){
     });
 }
 
-function construir_pedido(pedido) {
+function construir_pedido(tipo_pedido) {
     place = autocomplete.getPlace();
     let city = place.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
-        place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+               place.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
     foto_url = place.photos[0].getUrl();
     localStorage.setItem('foto_url', foto_url);
-    console.log(typeof foto_url, foto_url);
+
     let unidade = "&units="+localStorage.getItem('unidade');
 
-    if (pedido === PEDIR_TEMPO_ACTUAL){
+    if (tipo_pedido === PEDIR_TEMPO_ACTUAL){
         let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
         return pedido_tempo_actual;
     }
 
-    if (pedido === PEDIR_SIGNIFICATIVA){
+    if (tipo_pedido === PEDIR_SIGNIFICATIVA){
         let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
         return pedido_significativa;
     }
@@ -147,14 +149,16 @@ let btn_dia3_select = null;
 let btn_dia4_select = null;
 let btn_dia5_select = null;
 let btn_dia_select = null;
-let json_str = localStorage.getItem("significativa");
-
-let msg = JSON.parse(json_str);
 let prev_dias_select = null;
 
 //----Função OnLoad Página Significativa
 //Prenche e clona os 5 dias da previsão
 function renderizar_significativa() {
+    fazer_pedido(PEDIR_SIGNIFICATIVA, 'significativa');
+    let response_str = localStorage.getItem('significativa');
+    console.log(typeof response_str, response_str);
+    let msg = JSON.parse(response_str);
+    console.log(typeof msg, msg);
     //Clone dos blocos de html
     item_coluna_hora = $('.coluna_hora').clone();
     $('.linha_hora').html('');
@@ -211,6 +215,10 @@ function renderizar_significativa() {
 }
 
 function atribuir_dias() {
+    let response_str = localStorage.getItem('significativa');
+    console.log(typeof response_str, response_str);
+    let msg = JSON.parse(response_str);
+    console.log(typeof msg, msg);
 
     let dados_json = msg.list;
     let temp_min_max = [];
@@ -323,6 +331,10 @@ function esconde_mostra_cont_signif(div_dia) {
 //Preenche o cabeçalho da tabela com as horas de forma dinâmica
 //Preenche o conteudo da tabela de forma dinamica
 function descritivo_3h (div_dia){
+    let response_str = localStorage.getItem('significativa');
+    //console.log(typeof response_str, response_str);
+    let msg = JSON.parse(response_str);
+    //console.log(typeof msg, msg);
     $('.linha_hora').html('');
     $('.linha_dia').html('');
     for (var i = -1; i < 8; i++) {
