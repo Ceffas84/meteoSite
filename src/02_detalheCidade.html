@@ -15,9 +15,28 @@
             crossorigin="anonymous"></script>
     <link href="../css/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="../js/main.js" type="application/javascript"></script>
-
 </head>
+
 <body onload="renderizar_pag_detalhes()">
+<header style="display: block">
+    <div class="container cabecalho_pag">
+        <div class="row justify-content-sm-center">
+            <div class="col bloco-esq text-center align-middle">
+                <a href="01_home.html">
+                    <img class="img_logo" src="../imagens/logo_meteosite.png" alt="logo site">
+                </a>
+            </div>
+            <div class="col-sm-8 bloco-drt text-center ">
+                <h1>Meteo Site</h1>
+            </div>
+            <div class="col text-center img_logo">
+                <a href="04_gestaoFavoritos.html">
+                    <img class="img-center" src="../imagens/favoritos.png" style="max-height:40px">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container-fluid text-center título">
     <div class="row">
         <div class="col-sm-12">
@@ -66,19 +85,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4 align-self-center">
+        <div class="col-sm-6 align-self-center">
             <div class="div_btn text-center">
                 <button onclick="" class="btn btn-secondary btns-favoritos">Adicionar aos favoritos</button>
             </div>
         </div>
-        <div class="col-sm-4 align-self-center">
+        <div class="col-sm-6 align-self-center">
             <div class="div_btn text-center">
                 <a href="03_previsaoSignificativa.html" onclick="fazer_pedido(PEDIR_SIGNIFICATIVA, 'significativa')" class="btn btn-info">Previsão a 5 dias</a>
-            </div>
-        </div>
-        <div class="col-sm-4 align-self-center">
-            <div class="div_btn text-center">
-                <button onclick="" class="btn btn-primary btns-detalhes">Converter para Kelvin</button>
             </div>
         </div>
     </div>

@@ -19,16 +19,34 @@
 </head>
 
 <body onload="renderizar_significativa()" class="pag_prev_significativa">
-
+<header style="display: block">
+    <div class="container cabecalho_pag">
+        <div class="row justify-content-sm-center">
+            <div class="col bloco-esq text-center align-middle">
+                <a href="01_home.html">
+                    <img class="img_logo" src="../imagens/logo_meteosite.png" alt="logo site">
+                </a>
+            </div>
+            <div class="col-sm-8 bloco-drt text-center ">
+                <h1>Meteo Site</h1>
+            </div>
+            <div class="col text-center align-middle">
+                <a href="04_gestaoFavoritos.html">
+                    <img class="img-center" src="../imagens/favoritos.png" style="max-height:40px">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container cab_pagina">
 
     <div class="row">
 
-        <div class="col-sm-3 bloco-esq text-center align-middle">
+        <!--<div class="col-sm-3 bloco-esq text-center align-middle">
             <img src="../imagens/logo_meteosite.png" alt="logo site">
-        </div>
+        </div>-->
 
-        <div class="col-sm-9 bloco-drt text-center ">
+        <div class="col-sm-12 bloco-drt text-center ">
             <h2>Previsão Significativa</h2>
             <h4 id="cidade_nome"></h4>
             <h5 id="cidade_pais"></h5>

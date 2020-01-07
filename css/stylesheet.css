@@ -1,5 +1,13 @@
+/*-----------------------------------PÁGINA HOME-----------------------------*/
+.grupo-btn{
+    align-self: center;
+}
 
+#btn-submeter{
+    margin: 1rem;
+}
 
+/*-----------------------------------PÁGINA DETALHES-----------------------------*/
 ul{
     list-style-type: none;
     padding-left: 10px;
@@ -125,13 +133,7 @@ ul{
 }
 
 
-
 /*---------------Página Gestão de Favoritos----------------*/
-
-.box-jumbotron{
-    margin: 20px;
-}
-
 .fav_box_img{
     align-self: center;
 }
@@ -148,12 +150,12 @@ ul{
 }
 
 header{
-     background-color: #eeffe6;     
+    background-color: #eeffe6;
+    margin-bottom: 1rem;
 }
 
 .cabecalho_pag{
-    margin-top: 10px;
-    height: 20% !important;
+    margin-bottom: 5rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -164,12 +166,10 @@ header{
 
 .img_logo {
     max-height: 80px;
-
 }
 .img-center {
     display: block;
     max-height: 50px;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
 }
 

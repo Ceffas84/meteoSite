@@ -29,22 +29,19 @@
 <header style="display: block">
     <div class="container cabecalho_pag">
         <div class="row justify-content-sm-center">
-
-            <div class="col bloco-esq text-center align-middle">
-                <img class="img_logo" src="../imagens/logo_meteosite.png" alt="logo site">
+            <div class="col bloco-esq text-center">
+                <a href="01_home.html">
+                    <img class="img_logo" src="../imagens/logo_meteosite.png" alt="logo site">
+                </a>
             </div>
-
             <div class="col-sm-8 bloco-drt text-center ">
                 <h1>Meteo Site</h1>
             </div>
-
             <div class="col text-center img_logo">
                 <a href="04_gestaoFavoritos.html">
                     <img class="img-center" src="../imagens/favoritos.png" style="max-height:40px">
                 </a>
-
             </div>
-
         </div>
     </div>
 </header>
@@ -55,14 +52,13 @@
         <div class="col-sm-6 text-center">
             <form id="formNome" onsubmit="fazer_pedido(PEDIR_TEMPO_ACTUAL, 'tempo_atual');" action="02_detalheCidade.html"
                   method="GET">
-            <input id="searchTextField" type="text" class="form-control"
+                <label>Consulte o tempo na sua cidade.</label>
+                <input id="searchTextField" type="text" class="form-control"
                    placeholder="Escreva aqui o nome da cidade.">
-                <input type="submit" class="btn btn-info">
+                <input type="submit" class="btn btn-info" id="btn-submeter">
             </form>
         </div>
-        <div class="col">
-
-
+        <div class="col grupo-btn">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-primary active">
                     <input type="radio" name="options" id="celcius" value="metric" onchange="GuardarUnidade();"

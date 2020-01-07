@@ -79,7 +79,52 @@ function construir_pedido(tipo_pedido) {
 }
 
 
+//---------------------------------------------Página Home---------------------------------------
+function renderizar_home() {
+    item_bloco_dia = $('.bloco_dia').clone();
+    $('.linha_blocos').html('');
+    let response_str = localStorage.getItem('array_favoritos');
+    let msg = JSON.parse(response_str);
+    if (msg != null){
+        let unidade = localStorage.getItem('unidade')=="metric"?"C":"K";
+        for (let i = 0; i < msg.length; i++) {
+            if (msg[i].visivel_home===1) {
+                let item_bloco_dia_clone = item_bloco_dia.clone();
+                console.log(msg[i].str_cidade_api);
+                let dados_json = get_obj_api_opewheather(msg[i].str_cidade_api, API_TEMPO_ATUAL);
+                console.log(dados_json);
+                let date_time = new Date(dados_json.dt),
+                    dia = date_time.getDate(),
+                    mes = date_time.getMonth(),
+                    ano = date_time.getFullYear(),
+                    dia_sem = date_time.getDay();
+                let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
+                let vento_dir = dados_json.wind.deg;
+                let humidade = dados_json.main.humidity;
+                let temp_min = dados_json.main.temp_min;
+                let temp_max = dados_json.main.temp_max;
+                $('.data', item_bloco_dia_clone).text(dia + "/" + meses_abrv[mes]);
+                $('.dia', item_bloco_dia_clone).text(dias_semana[dia_sem]);
+                $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade);
+                $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade);
+                $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
+                $('.vento_dir', item_bloco_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
+                $('.humidade', item_bloco_dia_clone).text(humidade + "%");
+                $('.linha_blocos').append(item_bloco_dia_clone);
+            }
+        }
+    }
+    inicializar_autocomplete();
+}
 
+function GuardarUnidade() {
+    let un =  $("input[name='options']:checked").val();
+    if (un === 'metric') {
+        localStorage.setItem('unidade', 'metric');
+    } else {
+        localStorage.setItem('unidade', 'kelvin');
+    }
+}
 
 
 //---------------------------------------------Página Detalhes--------------------------------------
@@ -108,14 +153,7 @@ function converter_para_kms_hora(n) {
     n = (n*60*60)/1000;
     return n;
 }
-function GuardarUnidade() {
-  let un =  $("input[name='options']:checked").val();
-  if (un === 'metric') {
-      localStorage.setItem('unidade', 'metric');
-  } else {
-      localStorage.setItem('unidade', 'kelvin');
-  }
-}
+
 
 //---------------------------------------------Página Singificativa--------------------------------------
 //----Constantes
@@ -202,41 +240,7 @@ function renderizar_significativa() {
     btn_dia5_select = $('#btn_dia_5');
     btn_dia_select = $('.btn_dia');
 }
-function renderizar_home() {
-    let response_str = localStorage.getItem('array_favoritos');
-    let msg = JSON.parse(response_str);
-    console.log(msg);
-    let unidade = localStorage.getItem('unidade')=="metric"?"C":"K";
-    item_bloco_dia = $('.bloco_dia').clone();
-    $('.linha_blocos').html('');
-    for (let i = 0; i < msg.length; i++) {
-        if (msg[i].visivel_home===1) {
-            let item_bloco_dia_clone = item_bloco_dia.clone();
-            console.log(msg[i].str_cidade_api);
-            let dados_json = get_obj_api_opewheather(msg[i].str_cidade_api, API_TEMPO_ATUAL);
-            console.log(dados_json);
-            let date_time = new Date(dados_json.dt),
-                dia = date_time.getDate(),
-                mes = date_time.getMonth(),
-                ano = date_time.getFullYear(),
-                dia_sem = date_time.getDay();
-            let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
-            let vento_dir = dados_json.wind.deg;
-            let humidade = dados_json.main.humidity;
-            let temp_min = dados_json.main.temp_min;
-            let temp_max = dados_json.main.temp_max;
-            $('.data', item_bloco_dia_clone).text(dia + "/" + meses_abrv[mes]);
-            $('.dia', item_bloco_dia_clone).text(dias_semana[dia_sem]);
-            $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade);
-            $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade);
-            $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
-            $('.vento_dir', item_bloco_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
-            $('.humidade', item_bloco_dia_clone).text(humidade + "%");
-            $('.linha_blocos').append(item_bloco_dia_clone);
-        }
-    }
-    inicializar_autocomplete()
-}
+
 function atribuir_dias() {
     let response_str = localStorage.getItem('significativa');
     console.log(typeof response_str, response_str);
