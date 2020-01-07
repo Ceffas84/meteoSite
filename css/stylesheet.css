@@ -1,10 +1,10 @@
-a{
-    display: none;
-}
+
+
 ul{
     list-style-type: none;
     padding-left: 10px;
 }
+
 .título{
     margin-top: 2%;
 }
@@ -40,12 +40,7 @@ ul{
 .cab_pagina img {
     max-height: 100px;
 }
-.bloco-drt h2{
-    line-height: 100%;
-}
-.bloco-esq{
-    height: 100%;
-}
+
 /*----------------Box temperatura----------------*/
 .box_temperatura{
     display: block;
@@ -152,6 +147,29 @@ ul{
 
 }
 
+header{
+     background-color: #eeffe6;     
+}
 
+.cabecalho_pag{
+    margin-top: 10px;
+    height: 20% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.cabecalho_pag h1{
+    margin-top: 10px;
+}
+
+.img_logo {
+    max-height: 80px;
+
+}
+.img-center {
+    display: block;
+    max-height: 50px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
 
