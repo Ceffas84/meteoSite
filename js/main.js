@@ -6,8 +6,6 @@ if (localStorage.getItem('unidade') == undefined){
     localStorage.setItem('unidade', 'metric');
 }
 
-
-
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
@@ -36,7 +34,6 @@ function fazer_pedido(pedido,destinolocalstorage){
             var err = eval("(" + xhr.responseText + ")");
             alert(err.Message);
         }
-
     }).done(function (msg) {
         console.log('Entrou: ' + msg.cod);
         if(parseInt(msg.cod) !== responseOK){
@@ -52,11 +49,9 @@ function fazer_pedido(pedido,destinolocalstorage){
 }
 
 function construir_pedido(tipo_pedido) {
-
     let city="";
     if(autocomplete != undefined) {
         let sitio = autocomplete.getPlace();
-
         city = sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
             sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
         foto_url = sitio.photos[0].getUrl();
@@ -93,18 +88,13 @@ function renderizar_home() {
                 console.log(msg[i].str_cidade_api);
                 let dados_json = get_obj_api_opewheather(msg[i].str_cidade_api, API_TEMPO_ATUAL);
                 console.log(dados_json);
-                let date_time = new Date(dados_json.dt),
-                    dia = date_time.getDate(),
-                    mes = date_time.getMonth(),
-                    ano = date_time.getFullYear(),
-                    dia_sem = date_time.getDay();
+                let nome_cidade = dados_json.name + ', ' + dados_json.sys.country;
                 let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
                 let vento_dir = dados_json.wind.deg;
                 let humidade = dados_json.main.humidity;
                 let temp_min = dados_json.main.temp_min;
                 let temp_max = dados_json.main.temp_max;
-                $('.data', item_bloco_dia_clone).text(dia + "/" + meses_abrv[mes]);
-                $('.dia', item_bloco_dia_clone).text(dias_semana[dia_sem]);
+                $('.nome-cidade', item_bloco_dia_clone).text(nome_cidade);
                 $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade);
                 $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade);
                 $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
@@ -158,10 +148,6 @@ function converter_para_kms_hora(n) {
 //---------------------------------------------Página Singificativa--------------------------------------
 //----Constantes
 const cor_meteo_verde_claro = "#84cab2";
-const cor_meteo_azul_claro = "#82befd";
-const cor_meteo_verde_vivo = "#1c9f73";
-const cor_meteo_azul_vivo = "#0687fc";
-
 
 const PONTOS_CARDEAIS = [   {   "ponto":"N", "grau_ini":337, "grau_fim":22},
     {   "ponto":"NE", "grau_ini":23, "grau_fim":67},
@@ -194,7 +180,7 @@ let prev_dias_select = null;
 function renderizar_significativa() {
     let response_str = localStorage.getItem('significativa');
     let msg = JSON.parse(response_str);
-    let unidade = localStorage.getItem('unidade')=="metric"?"C":"K";
+    let unidade = localStorage.getItem('unidade') === 'metric' ? 'C' : 'K';
     //Clone dos blocos de html
     item_coluna_hora = $('.coluna_hora').clone();
     $('.linha_hora').html('');
@@ -395,41 +381,8 @@ function descritivo_3h (div_dia){
 let item_media = null;
 let array_fav = [];
 
-/*
-let len_array_fav;
-let str_cid;
-let str_cid_pais;
-let str_url;
- */
 
-function apagar_favorito(pos) {
-    let lstorage_array_favoritos = localStorage.getItem('array_favoritos');
-    array_fav = JSON.parse(lstorage_array_favoritos);
-    array_fav.splice(pos,1);
-    localStorage.setItem('array_favoritos',JSON.stringify(array_fav));
-    render_lista_favoritos();
-}
 let obj_lstorage_array_favoritos = [];
-
-function actualiza_home(pos) {
-    let x = $("#cbox_vis_home_" + (pos + 1)).is(":checked");
-    if (x) {
-        if (qtd_cidades_visiveis()>=6){
-            alert("Numero de cidades visiveis máximo já antingido");
-            var new_valor_vis_home = 0;
-            $('#cbox_vis_home_' + (pos + 1)).prop("checked",false);
-        }  else{
-            var new_valor_vis_home = 1;
-        }
-    } else {
-        new_valor_vis_home = 0;
-    }
-    let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
-    obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
-    obj_lstorage_array_favoritos[pos].visivel_home = new_valor_vis_home;
-    localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
-    console.log("Função actualiza_home qtd_cidades visiveis -> "+qtd_cidades_visiveis());
-}
 
 function adicionar_favorito() {
     let str_cid_pais;
@@ -480,18 +433,6 @@ function adicionar_favorito() {
     }
 }
 
-function qtd_cidades_visiveis (){
-    let str_obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
-    let obj_lstorage_array_favoritos = JSON.parse(str_obj_lstorage_array_favoritos);
-    let contar = 0;
-    for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
-        if (obj_lstorage_array_favoritos[i].visivel_home === 1 ) {
-            contar++;
-        }
-    }
-    return contar;
-    console.log("Função qtd_cidades_visiveis "+contar);
-}
 
 function existe_cidade (cidade){
     let str_obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
@@ -516,6 +457,7 @@ function render_lista_favoritos(){
 
     let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
     let lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+    let unidade = localStorage.getItem('unidade')=="metric"?"C":"K";
 
     console.log("Conteudo local storage");
     console.log(lstorage_array_favoritos);
@@ -547,8 +489,8 @@ function render_lista_favoritos(){
 
 
             $('.cidade', item_media_clone).text(json.name);
-            $('.temp_max', item_media_clone).text(json.main.temp_max + 'º C');
-            $('.temp_min', item_media_clone).text(json.main.temp_min + 'º C');
+            $('.temp_max', item_media_clone).text(json.main.temp_max + 'º' + unidade);
+            $('.temp_min', item_media_clone).text(json.main.temp_min + 'º' + unidade);
             $('.vento_vel', item_media_clone).text(parseInt(json.wind.speed * 3.6) + ' Km/h');
             $('.vento_dir', item_media_clone).text(ponto_cardeal(parseInt(json.wind.deg)));
             //console.log("Direcao vento -> "+json.wind.deg);
@@ -597,6 +539,49 @@ function get_obj_api_opewheather(cidade,api) {
     });
     return resultado;
 }
+
+function qtd_cidades_visiveis (){
+    let str_obj_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    let obj_lstorage_array_favoritos = JSON.parse(str_obj_lstorage_array_favoritos);
+    let contar = 0;
+    for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
+        if (obj_lstorage_array_favoritos[i].visivel_home === 1 ) {
+            contar++;
+        }
+    }
+    return contar;
+    console.log("Função qtd_cidades_visiveis "+contar);
+}
+
+function apagar_favorito(pos) {
+    let lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    array_fav = JSON.parse(lstorage_array_favoritos);
+    array_fav.splice(pos,1);
+    localStorage.setItem('array_favoritos',JSON.stringify(array_fav));
+    render_lista_favoritos();
+}
+
+function actualiza_home(pos) {
+    let x = $("#cbox_vis_home_" + (pos + 1)).is(":checked");
+    if (x) {
+        if (qtd_cidades_visiveis()>=6){
+            alert("Numero de cidades visiveis máximo já antingido");
+            var new_valor_vis_home = 0;
+            $('#cbox_vis_home_' + (pos + 1)).prop("checked",false);
+        }  else{
+            var new_valor_vis_home = 1;
+        }
+    } else {
+        new_valor_vis_home = 0;
+    }
+    let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+    obj_lstorage_array_favoritos[pos].visivel_home = new_valor_vis_home;
+    localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+    console.log("Função actualiza_home qtd_cidades visiveis -> "+qtd_cidades_visiveis());
+}
+
+
 /*--------------------Funções de debug-----------------------
 
 function limpar_array_favoritos() {
@@ -612,8 +597,10 @@ function ler_array (){
     });
 }
 
-
-
+let len_array_fav;
+let str_cid;
+let str_cid_pais;
+let str_url;
 
 
 
@@ -629,4 +616,11 @@ function construir_pedido_por_cidade(tipo_pedido,city) {
         return pedido_significativa;
     }
 }
- */
+
+
+
+
+
+
+
+*/

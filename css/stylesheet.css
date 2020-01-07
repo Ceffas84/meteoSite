@@ -7,6 +7,12 @@
     margin: 1rem;
 }
 
+.bloco-dia-home{
+    background: rgba(63 140 191 1);
+    margin: 1rem;
+}
+
+
 /*-----------------------------------PÁGINA DETALHES-----------------------------*/
 ul{
     list-style-type: none;

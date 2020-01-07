@@ -45,14 +45,18 @@
     </div>
 </header>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col text-center">
-            <p><span>Pesquisa por cidade</span>
-                <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
-                <button class="btn btn-info btn_add_fav" onclick="adicionar_favorito()">Adicionar aos favoritos</button>
-            </p>
+        <div class="col"></div>
+        <div class="col-sm-6 text-center">
+            <form>
+                <label>Adicione a sua cidade aos favoritos.</label>
+                <input id="searchTextField" type="text" class="form-control"
+                       placeholder="Escreva aqui o nome da cidade.">
+                <input type="submit" class="btn btn-info" id="btn-submeter" value="Adicionar aos favoritos" onclick="adicionar_favorito()">
+            </form>
         </div>
+        <div class="col"></div>
     </div>
 </div>
 
@@ -65,7 +69,6 @@
             <li class="list-group-item lista_filho row">
                 <div class="container-fluid">
                     <div class="row">
-
                         <div class="col-sm-2 media_cell">
                             <button class="btn btn-info btn_rm_fav">Remover favorito</button>
                         </div>
