@@ -11,6 +11,18 @@
     background: rgba(63 140 191 1);
     margin: 1rem;
 }
+.fundo{
+
+    background-image: url("../imagens/sky.jpg") ;
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #1A;
+
+
+}
+
+
 
 
 /*-----------------------------------PÁGINA DETALHES-----------------------------*/
@@ -156,12 +168,12 @@ ul{
 }
 
 header{
-    background-color: #eeffe6;
-    margin-bottom: 1rem;
+    background-color: #eeffe6 !important;
+    /*margin-bottom: 1rem;*/
 }
 
 .cabecalho_pag{
-    margin-bottom: 5rem;
+   /* margin-bottom: 5rem;*/
     margin-left: auto;
     margin-right: auto;
 }
