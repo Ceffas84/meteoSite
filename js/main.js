@@ -9,18 +9,18 @@ if (localStorage.getItem('unidade') == undefined){
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
-const PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME = 0;
-const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 2;
-//const PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME = 3;
 const responseOK = 200;
 const PEDIR_TEMPO_ACTUAL = 1;
 const PEDIR_SIGNIFICATIVA = 2;
+const ADDRESS_COMPONENT_SIZE = 3;
+const LOCALITY = 0;
+const ADMINISTRATIVE_LEVEL_2 = 2;
+const ADMINISTRATIVE_LEVEL_3 = 3;
 
 function inicializar_autocomplete(){
     var input = document.getElementById('searchTextField');
     autocomplete = new google.maps.places.Autocomplete(input);
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
-
     })
 }
 
@@ -48,27 +48,42 @@ function fazer_pedido(pedido,destinolocalstorage){
     });
 }
 
+
+
 function construir_pedido(tipo_pedido) {
-    let city="";
-    if(autocomplete != undefined) {
+    let cidade, pais, cidadePais;
+
+    if(autocomplete !== undefined) {
         let sitio = autocomplete.getPlace();
-        city = sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_CITY_LONG_NAME].long_name + "," +
-            sitio.address_components[PLACES_API_ADDRESS_COMPONENTS_COUNTRY_SHORT_NAME].short_name;
+
+        console.log(sitio);
+        alert(sitio);
+
+        cidade = sitio.address_components[LOCALITY].long_name;
+
+        if(sitio.address_components.length <= ADDRESS_COMPONENT_SIZE){
+            pais = sitio.address_components[ADMINISTRATIVE_LEVEL_2].short_name;
+        } else {
+            pais = sitio.address_components[ADMINISTRATIVE_LEVEL_3].short_name;
+        }
+
+        cidadePais = cidade + ',' + pais;
+        alert(cidadePais);
         foto_url = sitio.photos[0].getUrl();
     } else {
-        city = $("#nome_cidade").text();
+        cidadePais = $("#nome_cidade").text();
     }
     localStorage.setItem('foto_url', foto_url);
 
     let unidade = "&units="+localStorage.getItem('unidade');
 
     if (tipo_pedido === PEDIR_TEMPO_ACTUAL){
-        let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
+        let pedido_tempo_actual = API_WEATHER_URL+cidadePais+unidade+API_KEY;
         return pedido_tempo_actual;
     }
 
     if (tipo_pedido === PEDIR_SIGNIFICATIVA){
-        let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
+        let pedido_significativa = API_FORECAST_URL+cidadePais+unidade+API_KEY;
         return pedido_significativa;
     }
 }
