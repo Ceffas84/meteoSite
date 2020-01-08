@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANhz5bwr_GeVlMzJKKYpzwup4S7N6fwgA&libraries=places"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANhz5bwr_GeVlMzJKKYpzwup4S7N6fwgA&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -23,66 +24,93 @@
     <script src="../js/main.js" type="application/javascript"></script>
 
 </head>
-<body class="pag_home" onload="inicializar_autocomplete()">
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3 bloco-esq text-center align-middle">
+<body class="pag_home" onload="renderizar_home()">
+
+<header style="display: block">
+    <div class="container cabecalho_pag">
+        <div class="row justify-content-sm-center">
+            <div class="col bloco-esq text-center">
+                <a href="01_home.html">
                     <img class="img_logo" src="../imagens/logo_meteosite.png" alt="logo site">
-                </div>
-                <div class="col-sm-9 bloco-drt text-center ">
-                    <h1>Meteo Site</h1>
-                </div>
+                </a>
             </div>
-        </div>
-    </header>
-
-    <div class="container" id="lista_img">
-        <div class="row">
-            <div class="col-sm">
-                <p>imagem_01</p>
+            <div class="col-sm-8 bloco-drt text-center ">
+                <h1>Meteo Site</h1>
             </div>
-            <div class="col-sm-1">
-                <p>imagem_02</p>
-            </div>
-            <div class="col-sm-1">
-                <p>imagem_03</p>
-            </div>
-            <div class="col-sm-1">
-                <p>imagem_04</p>
-            </div>
-            <div class="col-sm-1">
-                <p>imagem_05</p>
-            </div>
-            <div class="col-sm-1">
-                <p>imagem_06</p>
-            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-primary" href="04_gestaoFavoritos.html">Gestao Favoritos</a>
+            <div class="col text-center img_logo">
+                <a href="04_gestaoFavoritos.html">
+                    <img class="img-center" src="../imagens/favoritos.png" style="max-height:40px">
+                </a>
             </div>
         </div>
     </div>
+</header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col text-center" >
-                <p><span>Pesquisa por cidade</span>
-                <form id="formNome" onsubmit="fazer_pedido(PEDIR_TEMPO_ACTUAL, 'tempo_atual');" action="02_detalheCidade.html" method="GET">
-                        <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
-                        <span class="submit"> <input type="submit"></span>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                        <input type="radio" name="options" id="celcius" value="metric" onchange="GuardarUnidade();" checked> ºC
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="kelvin" onchange="GuardarUnidade();" value="kelvin"> ºK
-                    </label>
-                </div>
-                </form>
-                </p>
+<div class="container box_pesquisa" style="margin-top: 30px">
+    <div class="row justify-content-sm-center">
+        <div class="col"></div>
+        <div class="col-sm-6 text-center">
+            <form id="formNome" onsubmit="fazer_pedido(PEDIR_TEMPO_ACTUAL, 'tempo_atual');" action="02_detalheCidade.html"
+                  method="GET">
+                <label>Consulte o tempo na sua cidade.</label>
+                <input id="searchTextField" type="text" class="form-control"
+                   placeholder="Escreva aqui o nome da cidade.">
+                <input type="submit" class="btn btn-info" id="btn-submeter" value="Consultar Tempo">
+            </form>
+        </div>
+        <div class="col grupo-btn">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="options" id="celcius" value="metric" onchange="GuardarUnidade();"
+                           checked> ºC
+                </label>
+                <label class="btn btn-info">
+                    <input type="radio" name="options" id="kelvin" onchange="GuardarUnidade();" value="kelvin"> ºK
+                </label>
             </div>
         </div>
     </div>
+</div>
+
+<div class="container" id="lista_img">
+    <div class="row linha_blocos">
+        <div class="col-sm-2 bloco_dia bloco-dia-home text-center rounded">
+            <div class="lista_arg">
+                <div class="lista_arg_cab">
+                    <span class="nome-cidade"></span>
+                </div>
+                <hr>
+                <div class="box_temperatura">
+                    <div class="temp_logo">
+                        <img src="../imagens/termometro.png" alt="termometro">
+                    </div>
+                    <div class="temp_dados">
+                        <span class="temp_max bg-danger"></span>
+                        <span class="temp_min bg-primary"></span>
+                    </div>
+                </div>
+                <div class="box_vento">
+                    <div class="vento_logo">
+                        <img src="../imagens/windmill.png" alt="moinho">
+                    </div>
+                    <div class="vento_dados">
+                        <span class="vento_vel"></span>
+                        <span class="vento_dir"></span>
+                    </div>
+                </div>
+                <div class="box_humidade">
+                    <div class="humidade_logo">
+                        <img src="../imagens/humidade.png" alt="humidade">
+                    </div>
+                    <div class="humidade_dados">
+                        <span class="humidade"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

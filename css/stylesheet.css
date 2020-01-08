@@ -1,10 +1,24 @@
-a{
-    display: none;
+/*-----------------------------------PÁGINA HOME-----------------------------*/
+.grupo-btn{
+    align-self: center;
 }
+
+#btn-submeter{
+    margin: 1rem;
+}
+
+.bloco-dia-home{
+    background: rgba(63 140 191 1);
+    margin: 1rem;
+}
+
+
+/*-----------------------------------PÁGINA DETALHES-----------------------------*/
 ul{
     list-style-type: none;
     padding-left: 10px;
 }
+
 .título{
     margin-top: 2%;
 }
@@ -40,12 +54,7 @@ ul{
 .cab_pagina img {
     max-height: 100px;
 }
-.bloco-drt h2{
-    line-height: 100%;
-}
-.bloco-esq{
-    height: 100%;
-}
+
 /*----------------Box temperatura----------------*/
 .box_temperatura{
     display: block;
@@ -130,13 +139,7 @@ ul{
 }
 
 
-
 /*---------------Página Gestão de Favoritos----------------*/
-
-.box-jumbotron{
-    margin: 20px;
-}
-
 .fav_box_img{
     align-self: center;
 }
@@ -152,6 +155,27 @@ ul{
 
 }
 
+header{
+    background-color: #eeffe6;
+    margin-bottom: 1rem;
+}
 
+.cabecalho_pag{
+    margin-bottom: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.cabecalho_pag h1{
+    margin-top: 10px;
+}
+
+.img_logo {
+    max-height: 80px;
+}
+.img-center {
+    display: block;
+    max-height: 50px;
+    margin: 20px auto 0;
+}
 

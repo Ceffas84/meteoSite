@@ -25,18 +25,38 @@
 </head>
 
 <body onload="renderizar_pag_favoritos()">
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col text-center">
-            <p><span>Pesquisa por cidade</span>
-
-                <input id="searchTextField" type="text" size="50" placeholder="Escreva aqui o nome da cidade.">
-
-                <button class="btn btn-info btn_add_fav" onclick="adicionar_favorito()">Adicionar aos favoritos</button>
-
-            </p>
+<header style="display: block">
+    <div class="container cabecalho_pag">
+        <div class="row justify-content-sm-center">
+            <div class="col bloco-esq text-center align-middle">
+                <a href="01_home.html">
+                    <img class="img_logo" src="../imagens/logo_meteosite.png" alt="logo site">
+                </a>
+            </div>
+            <div class="col-sm-8 bloco-drt text-center ">
+                <h1>Meteo Site</h1>
+            </div>
+            <div class="col text-center img_logo">
+                <a href="04_gestaoFavoritos.html">
+                    <img class="img-center" src="../imagens/favoritos.png" style="max-height:40px">
+                </a>
+            </div>
         </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-sm-6 text-center">
+            <form>
+                <label>Adicione a sua cidade aos favoritos.</label>
+                <input id="searchTextField" type="text" class="form-control"
+                       placeholder="Escreva aqui o nome da cidade.">
+                <input type="submit" class="btn btn-info" id="btn-submeter" value="Adicionar aos favoritos" onclick="adicionar_favorito()">
+            </form>
+        </div>
+        <div class="col"></div>
     </div>
 </div>
 
@@ -49,28 +69,20 @@
             <li class="list-group-item lista_filho row">
                 <div class="container-fluid">
                     <div class="row">
-<!--------------------------------------------------------------------------------------------------------------------->
                         <div class="col-sm-2 media_cell">
-<!--  1  -->                  <button class="btn btn-info btn_rm_fav">Remover favorito</button>
+                            <button class="btn btn-info btn_rm_fav">Remover favorito</button>
                         </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                         <div class="col-sm-8 media_cell">
                             <div class="row">
-<!--------------------------------------------------------------------------------------------------------------------->
                                 <div class="fav_box_cidade fav_box col-sm-2 text-center">
-        <!--  *1 -->                <span class="cidade"></span>
+                                    <span class="cidade"></span>
                                 </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                                 <div class="col-sm-4 fav_box_temperatura fav_box col-sm-3">
                                     <div class="row">
-        <!--  *2 -->
-
-                                        <div class="fav_box_img col-sm-4">
+                                        <div class="fav_box_img col-sm-2">
                                             <img src="../imagens/termometro.png" alt="moinho">
                                         </div>
-
-                                        <div class="fav_box_dados1 col-sm-8">
-
+                                        <div class="fav_box_dados1 col-sm-10">
                                             <table width="100%">
                                                 <tr>
                                                     <td class="bg-info text-center"><span style="" class="temp_min "></span></td>
@@ -78,12 +90,9 @@
                                                     <td class="bg-danger text-center" width="48%"><span class="temp_max"></span></td>
                                                 </tr>
                                             </table>
-
                                         </div>
-
                                     </div>
                                 </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                                 <div class="fav_box_vento fav_box col-sm-3">
                                     <div class="row">
 
@@ -95,11 +104,8 @@
                                             <div><span class="vento_vel"></span></div>
                                             <div><span class="vento_dir"></span></div>
                                         </div>
-
-
                                     </div>
                                 </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                                 <div class="fav_box_humidade fav_box col-sm-3">
                                     <div class="row">
 
@@ -108,32 +114,25 @@
                                         </div>
 
                                         <div class="fav_box_dados col-sm-8">
-        <!-- *4 -->                         <span class="humidade"></span>
+                                            <span class="humidade"></span>
                                         </div>
-
                                     </div>
-
                                 </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                             </div>
                         </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                         <div class="col-sm-2 media_cell">
                             <div class="custom-control custom-checkbox">
                                 <div class="visto">
-<!-- 3 -->                          <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
+                                    <input type="Checkbox" class="custom-control-input cbox_input_vis_home">
                                     <label class="custom-control-label cbox_label_vis_home">Visível Home</label>
                                 </div>
                             </div>
                         </div>
-<!--------------------------------------------------------------------------------------------------------------------->
                     </div>
                 </div>
             </li>
-
         </ul>
     </div>
-
 </div>
 
 <!--
