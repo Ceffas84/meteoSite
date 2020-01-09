@@ -413,10 +413,6 @@ function autocomplete_cidade_pais (place) { //retorna  a cidade e pais no format
     }
 }
 
-
-
-
-
 function renderizar_pag_favoritos() {
     item_media = $('.lista_filho').clone();
     $('.lista_mae').html('');
