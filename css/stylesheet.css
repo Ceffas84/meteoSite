@@ -48,9 +48,6 @@ ul{
     max-height: 448px;
 }
 
-.btn_dia{
-    border: #84cab2 5px solid;
-}
 /*-----------------------------------PÁGINA PREVISÃO SIGNIFICATIVA-----------------------------*/
 
 /*---------------Cabeçalho página-------------*/
@@ -78,6 +75,7 @@ ul{
 .temp_dados span{
     margin: 10px;
     padding: 0 10px;
+    color: white;
 }
 /*----------------Box vento----------------*/
 .box_vento{
@@ -141,6 +139,9 @@ ul{
     background-color: #84cab2;
 }
 
+.lista_arg_cab{
+    font-weight: bold;
+}
 
 /*---------------Página Gestão de Favoritos----------------*/
 .fav_box_img{
@@ -182,3 +183,6 @@ header{
     margin: 20px auto 0;
 }
 
+.fav_box_dados1{
+    color: white;
+}
