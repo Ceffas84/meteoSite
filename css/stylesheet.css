@@ -7,19 +7,17 @@
     margin: 1rem;
 }
 
+
 .bloco-dia-home{
     background: rgba(63 140 191 1);
     margin: 1rem;
 }
 .fundo{
 
-    background-image: url("../imagens/sky.jpg") ;
+    background-image: url("../imagens/sky.jpg");
     background-repeat:no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-color: #1A;
-
-
 }
 
 
