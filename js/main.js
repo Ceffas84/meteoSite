@@ -204,7 +204,7 @@ function renderizar_significativa() {
     $('.linha_dia').html('');
     item_bloco_dia = $('.bloco_dia').clone();
     $('.linha_blocos').html('');
-    let json_min_max = atribuir_dias();
+    let json_min_max = atribuir_dias(msg.list);
     for (let i = 1, dados = 0; i <= 5; i++, dados = dados + 8) {
         let item_bloco_dia_clone = item_bloco_dia.clone();
         let dados_json = msg.list[dados];
@@ -242,39 +242,49 @@ function renderizar_significativa() {
     btn_dia_select = $('.btn_dia');
 }
 
-function atribuir_dias() {
-    let response_str = localStorage.getItem('significativa');
-    console.log(typeof response_str, response_str);
-    let msg = JSON.parse(response_str);
-    console.log(typeof msg, msg);
-    let dados_json = msg.list;
-    let temp_min_max = [];
+function atribuir_dias(json) {
+
+    var temp_min_max = [];
+
     let temp_min = 999;
     let temp_max = -999;
     let len_temp_min_max = 0;
-    for (let i = 0; i < 40; i++) {
-        let array_data_hora = dados_json[i].dt_txt.split(" ");
-        let json_data = array_data_hora[0];
-        let json_temp_min = dados_json[i].main.temp_min;
-        let json_temp_max = dados_json[i].main.temp_max;
-        if (len_temp_min_max === 0) {
-            len_temp_min_max = temp_min_max.push({"data": json_data, "temp_min": json_temp_min, "temp_max": json_temp_max});
-        }
-        if (json_data > temp_min_max[len_temp_min_max - 1].data) {
-            len_temp_min_max = temp_min_max.push({"data": json_data, "temp_min": temp_min, "temp_max": temp_max});
-            temp_min = 999;
-            temp_max = -999;
+    console.log(json);
+
+    for (var i = 0; i < 40; i++) {
+        var data_hora = json[i].dt_txt.split(" ");
+            var json_data = data_hora[0];
+
+        var json_data_dia = new Date(json[i].dt_txt).getDate();
+
+
+        var json_temp_min = json[i].main.temp_min;
+        var json_temp_max = json[i].main.temp_max;
+
+        if (i === 0) {
+            console.log(json_data,json_temp_min,json_temp_max);
+        len_temp_min_max = temp_min_max.push({"data": json_data, "temp_min": json_temp_min, "temp_max": json_temp_max});
         } else {
-            if (json_temp_min < temp_min) {
-                temp_min = json_temp_min;
-            }
-            if (json_temp_max > temp_max) {
-                temp_max = json_temp_max;
+            var array_data = new Date(temp_min_max[len_temp_min_max - 1].data).getDate();
+            console.log(json_data_dia, array_data);
+            if (json_data_dia > array_data) {
+                len_temp_min_max = temp_min_max.push({
+                    "data": json_data,
+                    "temp_min": json_temp_min,
+                    "temp_max": json_temp_max
+                });
+            } else {
+                if (json_temp_min < temp_min_max[len_temp_min_max - 1].temp_min) {
+                    console.log(json_temp_min, temp_min_max[len_temp_min_max - 1].temp_max);
+                    temp_min_max[len_temp_min_max - 1].temp_min = json_temp_min;
+                }
+                if (json_temp_max > temp_min_max[len_temp_min_max - 1].temp_max) {
+                    temp_min_max[len_temp_min_max - 1].temp_max = json_temp_max;
+                }
             }
         }
     }
-    temp_min_max.forEach(function (elemento) {
-    });
+    console.log(temp_min_max);
     return temp_min_max;
 }
 //----Função que retorna o ponto cardeal segundo o grau que é dado
@@ -349,6 +359,7 @@ function descritivo_3h (div_dia){
     console.log(typeof response_str, response_str);
     let msg = JSON.parse(response_str);
     let unidade = localStorage.getItem('unidade')=="metric"?"C":"K";
+    console.log(localStorage.getItem('unidade'));
 
 
     //console.log(typeof msg, msg);
@@ -376,7 +387,7 @@ function descritivo_3h (div_dia){
                 $('.linha_hora').append(item_coluna_hora_clone);
         }
     }
-    var coluna_dia_h_0_clone = item_coluna_dia_h_0.clone();
+    /*alterei 8/1 22:16* de var para let*/let coluna_dia_h_0_clone = item_coluna_dia_h_0.clone();
     $('.linha_dia').append(coluna_dia_h_0_clone);
     for (let i = ((div_dia*8)-8), j=0; j<8; i++, j++){
         let coluna_dia_clone = item_coluna_dia.clone();
@@ -456,7 +467,6 @@ function existe_cidade (cidade){
     if (obj_lstorage_array_favoritos === null) {
         return 0;
     }
-
     console.log("Local storage -> "+obj_lstorage_array_favoritos);
     let contar = 0;
     for (let i=0; i<obj_lstorage_array_favoritos.length; i++){
