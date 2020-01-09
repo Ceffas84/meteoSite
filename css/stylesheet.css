@@ -13,7 +13,7 @@
 }
 .fundo{
 
-    background-image: url("../imagens/sky.jpg") ;
+    background-image: url("../imagens/2381.jpg") ;
     background-repeat:no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -168,7 +168,7 @@ ul{
 }
 
 header{
-    background-color: #eeffe6 !important;
+    background-color: #0687fc !important;
     /*margin-bottom: 1rem;*/
 }
 
