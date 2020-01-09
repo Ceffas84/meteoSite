@@ -7,21 +7,17 @@
     margin: 1rem;
 }
 
-
 .bloco-dia-home{
     background: rgba(63 140 191 1);
     margin: 1rem;
 }
 .fundo{
 
-    background-image: url("../imagens/sky.jpg");
+    background-image: url("../imagens/2381_alpha_50.png") ;
     background-repeat:no-repeat;
     background-size: cover;
     background-attachment: fixed;
 }
-
-
-
 
 /*-----------------------------------PÁGINA DETALHES-----------------------------*/
 ul{
@@ -35,10 +31,6 @@ ul{
 
 .div_detalhes{
     margin: 2%;
-}
-
-.item_nome{
-    color: #84cab2;
 }
 
 .item_valor{
@@ -166,7 +158,7 @@ ul{
 }
 
 header{
-    background-color: #eeffe6 !important;
+    background-color: #0687fc !important;
     /*margin-bottom: 1rem;*/
 }
 
