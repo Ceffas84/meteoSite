@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:margin-top="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Previsão Significativa</title>
@@ -29,7 +29,7 @@
                 </a>
             </div>
             <div class="col-sm-8 bloco-drt text-center ">
-                <h1>Meteo Site</h1>
+                <h1>Previsão Significativa</h1>
             </div>
             <div class="col text-center align-middle">
                 <a href="04_gestaoFavoritos.html">
@@ -40,7 +40,7 @@
     </div>
 </header>
 
-<div class="container cab_pagina">
+<div class="container cab_pagina" style="margin-top: 30px">
 
     <div class="row">
 
@@ -49,9 +49,9 @@
         </div>-->
 
         <div class="col-sm-12 bloco-drt text-center ">
-            <h2>Previsão Significativa</h2>
-            <h4 id="cidade_nome"></h4>
-            <h5 id="cidade_pais"></h5>
+            <h2>
+                <span class="ident_cidade" id="cidade_nome"></span>
+            </h2>
         </div>
 
     </div>
@@ -118,12 +118,15 @@
                 <p class="temperatura_lg">Temp.</p>
                 <p class="vento_vel_lg">Vel. Vento</p>
                 <p class="vento_dir_lg">Dir. Vento</p>
+                <p class="humidade">Humidade</p>
+                <p class="press_atomos">Pressão Atmosférica</p>
             </th>
             <td class="coluna_dia text-center">
                 <div class="conteudo_dia">
                     <p class="temperatura"></p>
                     <p class="vento_vel"></p>
-                    <p class="vento_dir"></p>
+                    <p class="humidade"></p>
+                    <p class="press_atmos"></p>
                 </div>
             </td>
         </tr>

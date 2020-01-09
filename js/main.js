@@ -1,6 +1,6 @@
 'use strict';
 
-var autocomplete, place, foto_url; //variaveis auxiliares à função de autocomplete
+let autocomplete, place, foto_url; //variaveis auxiliares à função de autocomplete
 
 if (localStorage.getItem('unidade') == undefined) {
     localStorage.setItem('unidade', 'metric');
@@ -10,21 +10,29 @@ const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 const responseOK = 200;
-const PEDIR_TEMPO_ACTUAL = 1;
-const PEDIR_SIGNIFICATIVA = 2;
+const API_TEMPO_ATUAL = 1;
+const API_SIGNIFICATIVA = 2;
 const ADDRESS_COMPONENT_SIZE = 3;
 const LOCALITY = 0;
 const ADMINISTRATIVE_LEVEL_2 = 2;
 const ADMINISTRATIVE_LEVEL_3 = 3;
+const SUCESSO = 1;
+const INSUCESSO = 0;
 
 function inicializar_autocomplete() {
-    var input = document.getElementById('searchTextField');
+    let input = document.getElementById('searchTextField');
     autocomplete = new google.maps.places.Autocomplete(input);
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
     });
 }
 
-function fazer_pedido(pedido, destinolocalstorage) {
+function btn_submeter() {
+    place = autocomplete.getPlace();
+    let cidade = JSON.stringify(get_obj_api_opewheather(autocomplete_cidade_pais(place), API_TEMPO_ATUAL));
+    localStorage.setItem('tempo_atual', cidade);
+}
+
+/*function fazer_pedido(pedido, destinolocalstorage) {
     let pedido_construido = construir_pedido(pedido);
     $.ajax({
         method: 'GET',
@@ -55,9 +63,6 @@ function construir_pedido(tipo_pedido) {
     if (autocomplete !== undefined) {
         let sitio = autocomplete.getPlace();
 
-        console.log(sitio);
-        alert(sitio);
-
         cidade = sitio.address_components[LOCALITY].long_name;
 
         if (sitio.address_components.length <= ADDRESS_COMPONENT_SIZE) {
@@ -67,7 +72,6 @@ function construir_pedido(tipo_pedido) {
         }
 
         cidadePais = cidade + ',' + pais;
-        alert(cidadePais);
         foto_url = sitio.photos[0].getUrl();
     } else {
         cidadePais = $("#nome_cidade").text();
@@ -85,7 +89,7 @@ function construir_pedido(tipo_pedido) {
         let pedido_significativa = API_FORECAST_URL + cidadePais + unidade + API_KEY;
         return pedido_significativa;
     }
-}
+}*/
 
 
 
@@ -159,6 +163,18 @@ function converter_para_kms_hora(n) {
     return n;
 }
 
+function btn_adc_fav_pag_det(){
+    let response_str = localStorage.getItem('tempo_atual');
+    //console.log(typeof response_str, response_str);
+    let response_json = JSON.parse(response_str);
+    let str_cidade_pais = response_json.name + ',' + response_json.sys.country;
+    //Informa o utilizador do sucesso ou não da introdução da cidade nos favoritos
+    if (adicionar_favorito(str_cidade_pais)===INSUCESSO){
+        alert("A cidade já existe nos favoritos.");
+    } else{
+        alert('A cidade foi adicionada com sucesso aos favoritos.');
+    }
+}
 
 //---------------------------------------------Página Singificativa--------------------------------------
 const PONTOS_CARDEAIS = [{"ponto": "N", "grau_ini": 337, "grau_fim": 22},
@@ -213,7 +229,6 @@ function renderizar_significativa() {
         let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
         let vento_dir = dados_json.wind.deg;
         let humidade = dados_json.main.humidity;
-        console.log(json_min_max[i]);
         let temp_min = json_min_max[i - 1].temp_min;
         let temp_max = json_min_max[i - 1].temp_max;
         $(item_bloco_dia_clone).attr("id", "dia_" + i);
@@ -394,14 +409,10 @@ function descritivo_3h(div_dia) {
 
 let item_media = null;
 
-
 let obj_lstorage_array_favoritos = [];
 
 
-
-
 function autocomplete_cidade_pais (place) { //retorna  a cidade e pais no formato colocar no url do pedido a API (ex. Lisboa,PT)
-    let str_cid_pais;
     let api_adcomp_type_country;
     for (let i = 0; i < place.address_components.length; i++) {
         if (place.address_components[i].types[0] === "country") {
@@ -411,10 +422,6 @@ function autocomplete_cidade_pais (place) { //retorna  a cidade e pais no format
     }
 }
 
-
-
-
-
 function renderizar_pag_favoritos() {
     item_media = $('.lista_filho').clone();
     $('.lista_mae').html('');
@@ -422,8 +429,6 @@ function renderizar_pag_favoritos() {
     inicializar_autocomplete();
 }
 
-let API_TEMPO_ATUAL = 1;
-let API_SIGNIFICATIVA = 2;
 
 function render_lista_favoritos() {
     $('.lista_mae').html('');
@@ -431,7 +436,6 @@ function render_lista_favoritos() {
     let lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
     let unidade = localStorage.getItem('unidade') == "metric" ? "C" : "K";
     if (lstorage_array_favoritos === null) {
-        console.log("Array vazio");
     } else {
         for (let i = 0; i < lstorage_array_favoritos.length; i++) {
             let json = get_obj_api_opewheather(lstorage_array_favoritos[i].str_cidade_api, API_TEMPO_ATUAL);
@@ -452,19 +456,46 @@ function render_lista_favoritos() {
             $('.temp_min', item_media_clone).text(json.main.temp_min + 'º' + unidade);
             $('.vento_vel', item_media_clone).text(parseInt(json.wind.speed * 3.6) + ' Km/h');
             $('.vento_dir', item_media_clone).text(ponto_cardeal(parseInt(json.wind.deg)));
-            //console.log("Direcao vento -> "+json.wind.deg);
             $('.humidade', item_media_clone).text(json.main.humidity + '%');
             $('.lista_mae').append(item_media_clone);
         }
     }
 }
 
-function adicionar_favorito() {
+function adicionar_favorito(str_cidade) {
     let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+
+    //Verificamos se o array dos favoritos no array no localstorage tem cidades
+    if (str_lstorage_array_favoritos === null) {   //Se não tem, introduzimos a cidade selecionada
+        obj_lstorage_array_favoritos.push({
+            "str_cidade_api": str_cidade,
+            "visivel_home": 0
+        });
+        localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+
+        return SUCESSO;
+    } else {   //Se o array já tem cidades, verificamos se a cidade selecionada não existe
+        if (existe_cidade(str_cidade) === 0) {
+            obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+            obj_lstorage_array_favoritos.push({
+                "str_cidade_api": str_cidade,
+                "visivel_home": 0
+            });
+            localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+
+            return SUCESSO;
+        } else {
+            //alert("A cidade selecionada já existe nos favoritos");
+            return INSUCESSO;
+        }
+    }
+}
+
+function btn_adc_fav_pag_fav() {
     //Verificamos se foi introduzida uma cidade no autocomplete da Google
     //Se está undefinded, alertamos o utilizador que não selecionou cidade
     place = autocomplete.getPlace();
-    console.log(place);
+
     if (place === undefined) {
         alert("Não selecionou nenhuma cidade");
         return;
@@ -472,33 +503,19 @@ function adicionar_favorito() {
     //Se sim fazemos a string da cidade para fazer o pedido à API
     //Verificamos se existe a a cidade na API OPENWHEATHER
     let str_cidade_pais = autocomplete_cidade_pais(place);
-    console.log("adicionar favorito - > "+str_cidade_pais);
-    if (get_obj_api_opewheather(str_cidade_pais, API_TEMPO_ATUAL) === -1) {
-        alert("Cidade não existe na API");
+
+    if (get_obj_api_opewheather(str_cidade_pais, API_TEMPO_ATUAL) === INSUCESSO) {
+        alert("Cidade não existe na API.");
         return;
     }
-    //Verificamos se o array dos favoritos no array no localstorage tem cidades
-    if (str_lstorage_array_favoritos === null) {   //Se não tem, introduzimos a cidade selecionada
-        let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({
-            "str_cidade_api": str_cidade_pais,
-            "visivel_home": 0
-        });
-        localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+    //Informa o utilizador do sucesso ou não da introdução da cidade nos favoritos
+    if (adicionar_favorito(str_cidade_pais)===INSUCESSO){
+        alert("A cidade já existe nos favoritos.");
+    } else{
         render_lista_favoritos();
-    } else {   //Se o array já tem cidades, verificamos se a cidade selecionada não existe
-        if (existe_cidade(str_cidade_pais) === 0) {
-            obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
-            let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({
-                "str_cidade_api": str_cidade_pais,
-                "visivel_home": 0
-            });
-            localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
-            render_lista_favoritos();
-        } else {
-            alert("A cidade selecionada já existe nos favoritos");
-        }
     }
 }
+
 
 function existe_cidade(str_cidade_pais) {
     var str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
@@ -526,21 +543,20 @@ function get_obj_api_opewheather(cidade, api) {
     if (api === API_SIGNIFICATIVA) {
         pedido_construido = API_FORECAST_URL + cidade + unidade + API_KEY;
     }
-    alert("funcao get_obj_api_openwheather - > "+pedido_construido);
+
     $.ajax({
         method: 'GET',
         async: false,
         url: pedido_construido,
         error: function (xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");
-            //alert(err.Message);
-            resultado = -1;
+            resultado = INSUCESSO;
         }
     }).done(function (msg) {
         if (parseInt(msg.cod) !== responseOK) {
             console.log("Erro 200 -> " + msg.cod);
             alert("Erro: " + msg.cod + "\n" + msg.message);
-            resultado = -1;
+            resultado = INSUCESSO;
         } else {
             resultado = msg;
         }
@@ -558,7 +574,6 @@ function qtd_cidades_visiveis() {
         }
     }
     return contar;
-    console.log("Função qtd_cidades_visiveis " + contar);
 }
 
 function apagar_favorito(pos) {     //Apaga um regito do array dos favoritos
