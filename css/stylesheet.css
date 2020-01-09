@@ -160,8 +160,12 @@ ul{
 }
 
 header{
-    background-color: #0687fc !important;
+    /*background-image: linear-gradient(to bottom right, blue, darkseagreen)!important;*/
+
     /*margin-bottom: 1rem;*/
+}
+header h1{
+    color: black;
 }
 
 .cabecalho_pag{
@@ -176,12 +180,33 @@ header{
 
 .img_logo {
     max-height: 80px;
+    opacity: unset;
 }
 .img-center {
     display: block;
     max-height: 50px;
     margin: 20px auto 0;
 }
+.footer {
+
+
+
+    color: white;
+    text-align: center;
+}
+.wrapper{
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+.footer, .push{
+    height: 50px;
+}
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+
 
 .fav_box_dados1{
     color: white;
