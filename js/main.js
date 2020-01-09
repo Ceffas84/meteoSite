@@ -16,6 +16,8 @@ const ADDRESS_COMPONENT_SIZE = 3;
 const LOCALITY = 0;
 const ADMINISTRATIVE_LEVEL_2 = 2;
 const ADMINISTRATIVE_LEVEL_3 = 3;
+const SUCESSO = 1;
+const INSUCESSO = 0;
 
 function inicializar_autocomplete() {
     var input = document.getElementById('searchTextField');
@@ -459,8 +461,51 @@ function render_lista_favoritos() {
     }
 }
 
-function adicionar_favorito() {
+function adicionar_favorito(str_cidade) {
     let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
+    /*//Verificamos se foi introduzida uma cidade no autocomplete da Google
+    //Se está undefinded, alertamos o utilizador que não selecionou cidade
+    place = autocomplete.getPlace();
+    console.log(place);
+    if (place === undefined) {
+        alert("Não selecionou nenhuma cidade");
+        return;
+    }*/
+    //Se sim fazemos a string da cidade para fazer o pedido à API
+    //Verificamos se existe a a cidade na API OPENWHEATHER
+    /*let str_cidade_pais = autocomplete_cidade_pais(place);
+    console.log("adicionar favorito - > "+str_cidade_pais);
+    if (get_obj_api_opewheather(str_cidade_pais, API_TEMPO_ATUAL) === -1) {
+        alert("Cidade não existe na API");
+        return;
+    }*/
+    //Verificamos se o array dos favoritos no array no localstorage tem cidades
+    if (str_lstorage_array_favoritos === null) {   //Se não tem, introduzimos a cidade selecionada
+        let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({
+            "str_cidade_api": str_cidade,
+            "visivel_home": 0
+        });
+        localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+        //render_lista_favoritos();
+        return SUCESSO;
+    } else {   //Se o array já tem cidades, verificamos se a cidade selecionada não existe
+        if (existe_cidade(str_cidade) === 0) {
+            obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
+            let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({
+                "str_cidade_api": str_cidade,
+                "visivel_home": 0
+            });
+            localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+            //render_lista_favoritos();
+            return SUCESSO;
+        } else {
+            //alert("A cidade selecionada já existe nos favoritos");
+            return INSUCESSO;
+        }
+    }
+}
+
+function btn_adc_fav_pag_fav() {
     //Verificamos se foi introduzida uma cidade no autocomplete da Google
     //Se está undefinded, alertamos o utilizador que não selecionou cidade
     place = autocomplete.getPlace();
@@ -474,31 +519,17 @@ function adicionar_favorito() {
     let str_cidade_pais = autocomplete_cidade_pais(place);
     console.log("adicionar favorito - > "+str_cidade_pais);
     if (get_obj_api_opewheather(str_cidade_pais, API_TEMPO_ATUAL) === -1) {
-        alert("Cidade não existe na API");
+        alert("Cidade não existe na API.");
         return;
     }
-    //Verificamos se o array dos favoritos no array no localstorage tem cidades
-    if (str_lstorage_array_favoritos === null) {   //Se não tem, introduzimos a cidade selecionada
-        let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({
-            "str_cidade_api": str_cidade_pais,
-            "visivel_home": 0
-        });
-        localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
+    //Informa o utilizador do sucesso ou não da introdução da cidade nos favoritos
+    if (adicionar_favorito(str_cidade_pais)===INSUCESSO){
+        alert("A cidade já existe nos favoritos.");
+    } else{
         render_lista_favoritos();
-    } else {   //Se o array já tem cidades, verificamos se a cidade selecionada não existe
-        if (existe_cidade(str_cidade_pais) === 0) {
-            obj_lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
-            let len_obj_lstorage_array_favoritos = obj_lstorage_array_favoritos.push({
-                "str_cidade_api": str_cidade_pais,
-                "visivel_home": 0
-            });
-            localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
-            render_lista_favoritos();
-        } else {
-            alert("A cidade selecionada já existe nos favoritos");
-        }
     }
 }
+
 
 function existe_cidade(str_cidade_pais) {
     var str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
