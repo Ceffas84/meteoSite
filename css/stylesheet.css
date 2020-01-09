@@ -13,17 +13,11 @@
 }
 .fundo{
 
-    background-image: url("../imagens/2381.jpg") ;
+    background-image: url("../imagens/2381_alpha_50.png") ;
     background-repeat:no-repeat;
     background-size: cover;
     background-attachment: fixed;
-
-
-
 }
-
-
-
 
 /*-----------------------------------PÁGINA DETALHES-----------------------------*/
 ul{
@@ -37,10 +31,6 @@ ul{
 
 .div_detalhes{
     margin: 2%;
-}
-
-.item_nome{
-    color: #84cab2;
 }
 
 .item_valor{
