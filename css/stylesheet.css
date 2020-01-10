@@ -42,6 +42,10 @@ ul{
     margin: 2%;
 }
 
+.item_nome{
+    font-weight: bold;
+}
+
 .item_valor{
     font-weight: bold;
     color: #0687fc;

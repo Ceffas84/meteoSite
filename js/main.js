@@ -217,13 +217,15 @@ function renderizar_pag_detalhes() {
     $('#nome_cidade').text(response_json.name);
     $('#detalhes_imagem_cidade').attr('alt', response_json.name);
     $('#detalhes_imagem_cidade').attr('src', foto_url);
-    $('#valor_1').text(response_json.main.temp + unidade);
-    $('#valor_2').text(response_json.main.temp_max + unidade);
-    $('#valor_3').text(response_json.main.temp_min + unidade);
-    $('#valor_4').text(converter_para_kms_hora(response_json.wind.speed) + ' Kms/h');
-    $('#valor_5').text(response_json.main.pressure + ' hPa');
-    $('#valor_6').text(response_json.main.humidity + '%');
-    $('#valor_7').text('Lon: ' + response_json.coord.lon + ', Lat: ' + response_json.coord.lat);
+    $('#valor_temp_atual').text(response_json.main.temp + unidade);
+    $('#valor_temp_min').text(response_json.main.temp_min + unidade);
+    $('#valor_temp_max').text(response_json.main.temp_max + unidade);
+    $('#valor_vel').text(converter_para_kms_hora(response_json.wind.speed) + ' Kms/h');
+    $('#valor_dir').text(ponto_cardeal(response_json.wind.deg));
+    $('#valor_pressao').text(response_json.main.pressure + ' hPa');
+    $('#valor_humidade').text(response_json.main.humidity + '%');
+    $('#valor_lon').text(response_json.coord.lon);
+    $('#valor_lat').text(response_json.coord.lat);
 }
 
 function converter_para_kms_hora(n) {

@@ -65,8 +65,8 @@
                                 <img src="../imagens/termometro.png" alt="termometro" style="max-height: 60px">
                             </div>
                             <div class="fav_box_dados col-sm-6">
-                                <span class="item_nome" id="nome_1">Temperatura Atual: </span>
-                                <p><span class="item_valor fav_box_dados" id="valor_1"></span></p>
+                                <span class="item_nome" id="nome_1">Temperatura Atual:</span>
+                                <p><span class="item_valor fav_box_dados" id="valor_temp_atual"></span></p>
                             </div>
                         </div>
                     </div>
@@ -83,16 +83,16 @@
                                 <table width="100%">
                                     <thead>
                                     <tr>
-                                        <th><span text-center>Mínima</span></th>
+                                        <th><span text-center class="item_nome">Mínima</span></th>
                                         <td width="2%"></td>
-                                        <th><span text-center>Máxima</span></th>
+                                        <th><span text-center class="item_nome">Máxima</span></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td class="bg-primary text-center fav_box_dados1"><span style="" id="valor_2"></span></td>
+                                        <td class="bg-primary text-center fav_box_dados1"><span style="" id="valor_temp_min"></span></td>
                                         <td width="2%"></td>
-                                        <td class="bg-danger text-center fav_box_dados1" width="48%"><span id="valor_3"></span></td>
+                                        <td class="bg-danger text-center fav_box_dados1" width="48%"><span id="valor_temp_max"></span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -111,16 +111,16 @@
                                 <table width="100%">
                                     <thead>
                                     <tr>
-                                        <th><span text-center>Velocidade</span></th>
+                                        <th><span class="item_nome" text-center>Velocidade</span></th>
                                         <td width="2%"></td>
-                                        <th><span text-center>Direção</span></th>
+                                        <th><span class="item_nome" text-center>Direção</span></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td class="text-center"><span style="" id="valor_4"></span></td>
+                                        <td class="text-center item_valor"><span style="" id="valor_vel"></span></td>
                                         <td width="2%"></td>
-                                        <td class="text-center" width="48%"><span id=""></span></td>
+                                        <td class="text-center item_valor" width="48%"><span id="valor_dir"></span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -137,7 +137,7 @@
                             </div>
                             <div class="fav_box_dados col-sm-6">
                                 <span class="item_nome" id="nome_5">Pressão Atmosférica</span>
-                                <p><span class="item_valor" id="valor_5"></span></p>
+                                <p><span class="item_valor" id="valor_pressao"></span></p>
                             </div>
                         </div>
                     </div>
@@ -147,11 +147,11 @@
                     <div class="fav_box_humidade fav_box col-sm-12">
                         <div class="row">
                             <div class="fav_box col-sm-4">
-                                <img src="../imagens/humidade.png" alt="pressao" style="max-height: 60px">
+                                <img src="../imagens/humidade.png" alt="humidade" style="max-height: 60px">
                             </div>
                             <div class="fav_box_dados col-sm-6">
                                 <span class="item_nome" id="nome_6">Humidade</span>
-                                <p><span class="item_valor" id="valor_6"></span></p>
+                                <p><span class="item_valor" id="valor_humidade"></span></p>
                             </div>
                         </div>
                     </div>
@@ -161,22 +161,22 @@
                     <div class="fav_box_vento fav_box col-sm-12">
                         <div class="row">
                             <div class="fav_box col-sm-4">
-                                <img src="../imagens/latlong.png" alt="coordendas" style="max-height: 60px">
+                                <img src="../imagens/latlon.gif" alt="coordendas" style="max-height: 60px">
                             </div>
                             <div class="fav_box_dados col-sm-6">
                                 <table width="100%">
                                     <thead>
                                     <tr>
-                                        <th><span text-center>Latitude</span></th>
+                                        <th><span class="item_nome" text-center>Longitude</span></th>
                                         <td width="2%"></td>
-                                        <th><span text-center>Longitude</span></th>
+                                        <th><span class="item_nome" text-center>Latitude</span></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td class="text-center"><span style="" id="valor_7"></span></td>
+                                        <td class="text-center item_valor"><span style="" id="valor_lon"></span></td>
                                         <td width="2%"></td>
-                                        <td class="text-center" width="48%"><span id="valor_8"></span></td>
+                                        <td class="text-center item_valor" width="48%"><span id="valor_lat"></span></td>
                                     </tr>
                                     </tbody>
                                 </table>
