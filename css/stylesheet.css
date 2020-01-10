@@ -200,8 +200,7 @@ header h1{
     margin: 20px auto 0;
 }
 .footer {
-    color: #1c9f73;
-    text-align: center;
+    color: black;
 }
 .wrapper{
     min-height: 100%;
@@ -209,6 +208,7 @@ header h1{
 }
 .footer, .push{
     height: 50px;
+
 }
 html, body{
     height: 100%;
@@ -218,3 +218,7 @@ html, body{
 .fav_box_dados1{
     color: white;
 }
+
+
+
+
