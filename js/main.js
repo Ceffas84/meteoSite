@@ -162,14 +162,12 @@ function renderizar_fav_pag_home() {
 function renderizar_pag_home() {
     item_bloco_dia = $('.bloco_dia').clone();
     $('.linha_blocos').html('');
-
     let unidade = localStorage.getItem('unidade');
-    if (unidade == "metric") {
-        $('#id_rbtn_metric').prop("checked",true);
+    if (unidade === "metric") {
+        $('#rbtn_metric').prop("checked",true);
     } else {
-        $('#id_rbtn_imperial').prop("checked",true);
+        $('#rbtn_imperial').prop("checked",true);
     }
-
     renderizar_fav_pag_home();
     inicializar_autocomplete();
 }
@@ -182,6 +180,8 @@ function GuardarUnidade() {
     } else {
         localStorage.setItem('unidade', 'imperial');
     }
+    console.log(localStorage.getItem('unidade'));
+
     renderizar_fav_pag_home();
 }
 
