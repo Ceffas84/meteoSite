@@ -19,7 +19,15 @@
     background-attachment: fixed;
 }
 
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
 
+.pag_det_dados{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
 /*-----------------------------------PÁGINA DETALHES-----------------------------*/
 ul{
     list-style-type: none;
@@ -71,11 +79,14 @@ ul{
 .temp_dados{
     display: table-cell;
     vertical-align: middle;
+    width: 80%;
 }
 .temp_dados span{
     margin: 10px;
     padding: 0 10px;
     color: white;
+
+    width: 80%;
 }
 /*----------------Box vento----------------*/
 .box_vento{
@@ -83,7 +94,7 @@ ul{
 }
 .box_vento img{
     display:table;
-    max-height: 68px;
+    max-height: 40px;
     max-width: 20px;
 }
 .vento_logo {
@@ -94,9 +105,11 @@ ul{
 .vento_dados{
     display: table-cell;
     vertical-align: middle;
+    width: 80%;
 }
 .vento_dados span{
     margin: 3px;
+
 }
 
 /*----------------Box humidade----------------*/
@@ -107,7 +120,7 @@ ul{
 .box_humidade img{
     display:table;
     max-height: 40px;
-    max-width: 10px;
+    max-width: 20px;
 }
 .humidade_logo {
     display: table-cell;
@@ -117,6 +130,7 @@ ul{
 .humidade_dados{
     display: table-cell;
     vertical-align: middle;
+    width: 80%;
 }
 .humidade_dados span{
     width: 100%;
@@ -149,14 +163,12 @@ ul{
 }
 
 .fav_box_img img{
-    max-height: 30px;
-    max-width: 30px;
-
+    max-height: 20px;
+    max-width: 20px;
 }
 .custom-checkbox{
     display: flex;
     flex-direction: row;
-
 }
 
 header{
@@ -188,9 +200,6 @@ header h1{
     margin: 20px auto 0;
 }
 .footer {
-
-
-
     color: white;
     text-align: center;
 }
@@ -205,8 +214,6 @@ html, body{
     height: 100%;
     margin: 0;
 }
-
-
 
 .fav_box_dados1{
     color: white;

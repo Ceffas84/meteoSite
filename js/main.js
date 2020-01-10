@@ -6,18 +6,45 @@ if (localStorage.getItem('unidade') == undefined) {
     localStorage.setItem('unidade', 'metric');
 }
 
+//---------------------------------------------CONSTANTES--------------------------------------
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 const API_KEY = "&APPID=5f641b8ef2e6971af3d88024c6489ebf";
 const responseOK = 200;
 const API_TEMPO_ATUAL = 1;
 const API_SIGNIFICATIVA = 2;
-const ADDRESS_COMPONENT_SIZE = 3;
-const LOCALITY = 0;
-const ADMINISTRATIVE_LEVEL_2 = 2;
-const ADMINISTRATIVE_LEVEL_3 = 3;
 const SUCESSO = 1;
 const INSUCESSO = 0;
+
+const PONTOS_CARDEAIS = [{"ponto": "N", "grau_ini": 337, "grau_fim": 22},
+    {"ponto": "NE", "grau_ini": 23, "grau_fim": 67},
+    {"ponto": "E", "grau_ini": 68, "grau_fim": 112},
+    {"ponto": "SE", "grau_ini": 113, "grau_fim": 157},
+    {"ponto": "S", "grau_ini": 158, "grau_fim": 202},
+    {"ponto": "SO", "grau_ini": 203, "grau_fim": 247},
+    {"ponto": "O", "grau_ini": 248, "grau_fim": 292},
+    {"ponto": "NO", "grau_ini": 293, "grau_fim": 337},];
+const DIAS_SEMANA = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+const MESES_ABREV = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+//---------------------------------------------VARIAVEIS GLOBAIS--------------------------------------
+let item_coluna_hora = null;
+let item_coluna_dia_h_0 = null;
+let item_coluna_dia = null;
+let item_bloco_dia = null;
+let ultimo_botao_dia_clicado = null;
+let btn_dia1_select = null;
+let btn_dia2_select = null;
+let btn_dia3_select = null;
+let btn_dia4_select = null;
+let btn_dia5_select = null;
+let btn_dia_select = null;
+let prev_dias_select = null;
+
+let item_media = null;
+let obj_lstorage_array_favoritos = [];
+
 
 function inicializar_autocomplete() {
     let input = document.getElementById('searchTextField');
@@ -28,8 +55,12 @@ function inicializar_autocomplete() {
 
 function btn_submeter() {
     place = autocomplete.getPlace();
-    let cidade = JSON.stringify(get_obj_api_opewheather(autocomplete_cidade_pais(place), API_TEMPO_ATUAL));
+    let cidade_pais = autocomplete_cidade_pais(place);
+
+    let cidade = JSON.stringify(get_obj_api_opewheather(cidade_pais, API_TEMPO_ATUAL));
     localStorage.setItem('tempo_atual', cidade);
+
+    alert("a submeter");
 }
 
 /*function fazer_pedido(pedido, destinolocalstorage) {
@@ -91,16 +122,17 @@ function construir_pedido(tipo_pedido) {
     }
 }*/
 
-
-
 //---------------------------------------------Página Home---------------------------------------
-function renderizar_home() {
-    item_bloco_dia = $('.bloco_dia').clone();
+function renderizar_fav_pag_home() {
+
     $('.linha_blocos').html('');
+
     let response_str = localStorage.getItem('array_favoritos');
     let msg = JSON.parse(response_str);
     if (msg != null) {
-        let unidade = localStorage.getItem('unidade') == "metric" ? "C" : "K";
+        let unidade = localStorage.getItem('unidade') == "metric" ? "C" : "F";
+        let unidade_vel = localStorage.getItem('unidade') === 'metric' ? 'km/h' : 'mph/h';
+        console.log(unidade);
         for (let i = 0; i < msg.length; i++) {
             if (msg[i].visivel_home === 1) {
                 let item_bloco_dia_clone = item_bloco_dia.clone();
@@ -111,8 +143,8 @@ function renderizar_home() {
                 let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
                 let vento_dir = dados_json.wind.deg;
                 let humidade = dados_json.main.humidity;
-                let temp_min = dados_json.main.temp_min;
-                let temp_max = dados_json.main.temp_max;
+                let temp_min = dados_json.main.temp_min.toFixed(0);
+                let temp_max = dados_json.main.temp_max.toFixed(0);
                 $('.nome-cidade', item_bloco_dia_clone).text(nome_cidade);
                 $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade);
                 $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade);
@@ -123,18 +155,34 @@ function renderizar_home() {
             }
         }
     }
+
+}
+
+function renderizar_pag_home() {
+    item_bloco_dia = $('.bloco_dia').clone();
+    $('.linha_blocos').html('');
+
+    let unidade = localStorage.getItem('unidade');
+    if (unidade == "metric") {
+        $('#id_rbtn_metric').prop("checked",true);
+    } else {
+        $('#id_rbtn_imperial').prop("checked",true);
+    }
+
+    renderizar_fav_pag_home();
     inicializar_autocomplete();
 }
+
 
 function GuardarUnidade() {
     let un = $("input[name='options']:checked").val();
     if (un === 'metric') {
         localStorage.setItem('unidade', 'metric');
     } else {
-        localStorage.setItem('unidade', 'kelvin');
+        localStorage.setItem('unidade', 'imperial');
     }
+    renderizar_fav_pag_home();
 }
-
 
 //---------------------------------------------Página Detalhes--------------------------------------
 function renderizar_pag_detalhes() {
@@ -144,8 +192,8 @@ function renderizar_pag_detalhes() {
     //console.log(typeof response_json, response_json);
     foto_url = localStorage.getItem('foto_url');
     //console.log(typeof foto_url, foto_url);
-    let unidade = localStorage.getItem('unidade') === 'metric' ? '.º C' : '.º K';
-
+    let unidade = localStorage.getItem('unidade') === 'metric' ? '.º C' : '.º F';
+    let unidade_vel = localStorage.getItem('unidade') === 'metric' ? 'km/h' : 'mph/h';
     $('#nome_cidade').text(response_json.name);
     $('#detalhes_imagem_cidade').attr('alt', response_json.name);
     $('#detalhes_imagem_cidade').attr('src', foto_url);
@@ -160,55 +208,38 @@ function renderizar_pag_detalhes() {
 
 function converter_para_kms_hora(n) {
     n = (n * 60 * 60) / 1000;
-    return n;
+    return Math.round(n);
 }
 
-function btn_adc_fav_pag_det(){
+function btn_adc_fav_pag_det() {
     let response_str = localStorage.getItem('tempo_atual');
     //console.log(typeof response_str, response_str);
     let response_json = JSON.parse(response_str);
     let str_cidade_pais = response_json.name + ',' + response_json.sys.country;
     //Informa o utilizador do sucesso ou não da introdução da cidade nos favoritos
-    if (adicionar_favorito(str_cidade_pais)===INSUCESSO){
+    if (adicionar_favorito(str_cidade_pais) === INSUCESSO) {
         alert("A cidade já existe nos favoritos.");
-    } else{
+    } else {
         alert('A cidade foi adicionada com sucesso aos favoritos.');
     }
 }
 
-//---------------------------------------------Página Singificativa--------------------------------------
-const PONTOS_CARDEAIS = [{"ponto": "N", "grau_ini": 337, "grau_fim": 22},
-    {"ponto": "NE", "grau_ini": 23, "grau_fim": 67},
-    {"ponto": "E", "grau_ini": 68, "grau_fim": 112},
-    {"ponto": "SE", "grau_ini": 113, "grau_fim": 157},
-    {"ponto": "S", "grau_ini": 158, "grau_fim": 202},
-    {"ponto": "SO", "grau_ini": 203, "grau_fim": 247},
-    {"ponto": "O", "grau_ini": 248, "grau_fim": 292},
-    {"ponto": "NO", "grau_ini": 293, "grau_fim": 337},];
-const dias_semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
-const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-const meses_abrv = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-
-//----Variáveis globais
-let item_coluna_hora = null;
-let item_coluna_dia_h_0 = null;
-let item_coluna_dia = null;
-let item_bloco_dia = null;
-let ultimo_botao_dia_clicado = null;
-let btn_dia1_select = null;
-let btn_dia2_select = null;
-let btn_dia3_select = null;
-let btn_dia4_select = null;
-let btn_dia5_select = null;
-let btn_dia_select = null;
-let prev_dias_select = null;
+function btn_go_signif_pag_det() {
+    let obj_tempo_atual = JSON.parse(localStorage.getItem('tempo_atual'));
+    let cidade_pais = obj_tempo_atual.name + "," + obj_tempo_atual.sys.country;
+    let obj_significativa = get_obj_api_opewheather(cidade_pais, API_SIGNIFICATIVA)
+    let str_significativa = JSON.stringify(obj_significativa);
+    localStorage.setItem('significativa', str_significativa);
+}
 
 //----Função OnLoad Página Significativa
 //Prenche e clona os 5 dias da previsão
 function renderizar_significativa() {
     let response_str = localStorage.getItem('significativa');
     let msg = JSON.parse(response_str);
-    let unidade = localStorage.getItem('unidade') === 'metric' ? 'C' : 'K';
+    console.log(msg);
+    let unidade_temp = localStorage.getItem('unidade') === 'metric' ? 'C' : 'F';
+    let unidade_vel = localStorage.getItem('unidade') === 'metric' ? 'km/h' : 'mph/h';
     //Clone dos blocos de html
     item_coluna_hora = $('.coluna_hora').clone();
     $('.linha_hora').html('');
@@ -234,10 +265,10 @@ function renderizar_significativa() {
         $(item_bloco_dia_clone).attr("id", "dia_" + i);
         $('.btn_dia', item_bloco_dia_clone).attr("id", "btn_dia_" + i);
         $('.btn_dia', item_bloco_dia_clone).attr("onclick", "esconde_mostra_cont_signif(" + i + ")");
-        $('.data', item_bloco_dia_clone).text(dia + "/" + meses_abrv[mes]);
-        $('.dia', item_bloco_dia_clone).text(dias_semana[dia_sem]);
-        $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade);
-        $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade);
+        $('.data', item_bloco_dia_clone).text(dia + "/" + MESES_ABREV[mes]);
+        $('.dia', item_bloco_dia_clone).text(DIAS_SEMANA[dia_sem]);
+        $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade_temp);
+        $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade_temp);
         $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
         $('.vento_dir', item_bloco_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
         $('.humidade', item_bloco_dia_clone).text(humidade + "%");
@@ -364,7 +395,7 @@ function esconde_mostra_cont_signif(div_dia) {
 function descritivo_3h(div_dia) {
     let response_str = localStorage.getItem('significativa');
     let msg = JSON.parse(response_str);
-    let unidade = localStorage.getItem('unidade') == "metric" ? "C" : "K";
+    let unidade_temp = localStorage.getItem('unidade') == "metric" ? "C" : "F";
     $('.linha_hora').html('');
     $('.linha_dia').html('');
     for (var i = -1; i < 8; i++) {
@@ -398,26 +429,28 @@ function descritivo_3h(div_dia) {
         let temperatura = (elemento1.main.temp).toFixed(0);
         let vento_vel = (elemento1.wind.speed * 3.6).toFixed(0);
         let vento_dir = elemento1.wind.deg;
-        $('.temperatura', coluna_dia_clone).text(temperatura + "º" + unidade);
+        let humidade = elemento1.main.humidity;
+        let press_atmosferica = elemento1.main.pressure + " hPa";
+
+
+        $('.temperatura', coluna_dia_clone).text(temperatura + "º" + unidade_temp);
         $('.vento_vel', coluna_dia_clone).text(vento_vel + " km/h");
         $('.vento_dir', coluna_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
+        $('.humidade', coluna_dia_clone).text(humidade);
+        $('.press_atmos', coluna_dia_clone).text(press_atmosferica);
+
+
         $('.linha_dia').append(coluna_dia_clone);
         //console.log("i -> ", i, " j-> ", j, "Data -> ", elemento.dt_txt, "Temp. -> ", temperatura, "Vel. Vento -> ", vento_vel, "Direcao Vento", vento_dir);
     }
 }
 
-
-let item_media = null;
-
-let obj_lstorage_array_favoritos = [];
-
-
-function autocomplete_cidade_pais (place) { //retorna  a cidade e pais no formato colocar no url do pedido a API (ex. Lisboa,PT)
+function autocomplete_cidade_pais(place) { //retorna  a cidade e pais no formato colocar no url do pedido a API (ex. Lisboa,PT)
     let api_adcomp_type_country;
     for (let i = 0; i < place.address_components.length; i++) {
         if (place.address_components[i].types[0] === "country") {
             api_adcomp_type_country = i;
-            return place.address_components[0].long_name+ "," + place.address_components[api_adcomp_type_country].short_name;
+            return place.address_components[0].long_name + "," + place.address_components[api_adcomp_type_country].short_name;
         }
     }
 }
@@ -429,12 +462,13 @@ function renderizar_pag_favoritos() {
     inicializar_autocomplete();
 }
 
-
 function render_lista_favoritos() {
     $('.lista_mae').html('');
     let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
     let lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
-    let unidade = localStorage.getItem('unidade') == "metric" ? "C" : "K";
+    let unidade = localStorage.getItem('unidade');
+    let unidade_temp = unidade == "metric" ? "C" : "F";
+    let unidade_vel = unidade == 'metric' ? ' km/h' : ' m/h';
     if (lstorage_array_favoritos === null) {
     } else {
         for (let i = 0; i < lstorage_array_favoritos.length; i++) {
@@ -443,7 +477,7 @@ function render_lista_favoritos() {
             $('.btn_rm_fav', item_media_clone).attr("id", "btn_rm_fav_" + (i + 1));
             $('.btn_rm_fav', item_media_clone).attr("onclick", "apagar_favorito(" + i + ")");
             $('.cbox_input_vis_home', item_media_clone).attr("id", "cbox_vis_home_" + (i + 1));
-            $('.cbox_input_vis_home', item_media_clone).attr("onclick", "actualiza_home(" + i + ")");
+            $('.cbox_input_vis_home', item_media_clone).attr("onclick", "atualiza_fav_vis_home(" + i + ")");
             if (lstorage_array_favoritos[i].visivel_home === 0) {
                 var load_cbox = false;
             } else {
@@ -452,9 +486,10 @@ function render_lista_favoritos() {
             $('.cbox_input_vis_home', item_media_clone).attr('checked', load_cbox);
             $('.cbox_label_vis_home', item_media_clone).attr("for", "cbox_vis_home_" + (i + 1));
             $('.cidade', item_media_clone).text(json.name);
-            $('.temp_max', item_media_clone).text(json.main.temp_max + 'º' + unidade);
-            $('.temp_min', item_media_clone).text(json.main.temp_min + 'º' + unidade);
-            $('.vento_vel', item_media_clone).text(parseInt(json.wind.speed * 3.6) + ' Km/h');
+            $('.temp_max', item_media_clone).text(json.main.temp_max + 'º' + unidade_temp);
+            $('.temp_min', item_media_clone).text(json.main.temp_min + 'º' + unidade_temp);
+            let speed = unidade == "metric" ? converter_para_kms_hora(json.wind.speed) : json.wind.speed;
+            $('.vento_vel', item_media_clone).text(speed + unidade_vel);
             $('.vento_dir', item_media_clone).text(ponto_cardeal(parseInt(json.wind.deg)));
             $('.humidade', item_media_clone).text(json.main.humidity + '%');
             $('.lista_mae').append(item_media_clone);
@@ -472,7 +507,6 @@ function adicionar_favorito(str_cidade) {
             "visivel_home": 0
         });
         localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
-
         return SUCESSO;
     } else {   //Se o array já tem cidades, verificamos se a cidade selecionada não existe
         if (existe_cidade(str_cidade) === 0) {
@@ -495,7 +529,6 @@ function btn_adc_fav_pag_fav() {
     //Verificamos se foi introduzida uma cidade no autocomplete da Google
     //Se está undefinded, alertamos o utilizador que não selecionou cidade
     place = autocomplete.getPlace();
-
     if (place === undefined) {
         alert("Não selecionou nenhuma cidade");
         return;
@@ -509,9 +542,9 @@ function btn_adc_fav_pag_fav() {
         return;
     }
     //Informa o utilizador do sucesso ou não da introdução da cidade nos favoritos
-    if (adicionar_favorito(str_cidade_pais)===INSUCESSO){
+    if (adicionar_favorito(str_cidade_pais) === INSUCESSO) {
         alert("A cidade já existe nos favoritos.");
-    } else{
+    } else {
         render_lista_favoritos();
     }
 }
@@ -543,6 +576,7 @@ function get_obj_api_opewheather(cidade, api) {
     if (api === API_SIGNIFICATIVA) {
         pedido_construido = API_FORECAST_URL + cidade + unidade + API_KEY;
     }
+    console.log(pedido_construido);
 
     $.ajax({
         method: 'GET',
@@ -584,7 +618,7 @@ function apagar_favorito(pos) {     //Apaga um regito do array dos favoritos
     render_lista_favoritos();
 }
 
-function actualiza_home(pos) {      //Actualiza as cidades visiveis no array dos favoritos
+function atualiza_fav_vis_home(pos) {      //Actualiza as cidades visiveis no array dos favoritos
     let x = $("#cbox_vis_home_" + (pos + 1)).is(":checked");
     if (x) {
         if (qtd_cidades_visiveis() >= 6) {
