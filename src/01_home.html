@@ -27,7 +27,7 @@
 
 </head>
 
-<body class="pag_home fundo" onload="renderizar_home()">
+<body class="pag_home fundo" onload="renderizar_pag_home()">
 <div class="wrapper">
 
 <header style="display: block">
@@ -65,20 +65,20 @@
         <div class="col grupo-btn">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-primary active">
-                    <input type="radio" name="options" id="celcius" value="metric" onchange="GuardarUnidade();"
-                           checked> ºC
+                    <input type="radio" name="options" id="rbtn_metric" value="metric" onchange="GuardarUnidade()"
+                           checked> ºC-Km/h
                 </label>
                 <label class="btn btn-info">
-                    <input type="radio" name="options1" id="kelvin" onchange="GuardarUnidade();" value="kelvin"> ºK
+                    <input type="radio" name="options" id="rbtn_imperial" onchange="GuardarUnidade()" value="imperial"> ºF - M/h
                 </label>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container" id="lista_img">
+<div class="container " id="lista_img">
     <div class="row linha_blocos">
-        <div class="col-sm-2 bloco_dia bloco-dia-home text-center rounded">
+        <div class="col-sm-2 bloco_dia bloco-dia-home text-center rounded col-centered">
             <div class="lista_arg">
                 <div class="lista_arg_cab">
                     <span class="nome-cidade"></span>
