@@ -54,11 +54,16 @@ function inicializar_autocomplete() {
 }
 
 function btn_submeter() {
+
     place = autocomplete.getPlace();
     let cidade_pais = autocomplete_cidade_pais(place);
 
+    let foto_url = place.photos[0].getUrl();
+    localStorage.setItem('foto_url', foto_url);
+
     let cidade = JSON.stringify(get_obj_api_opewheather(cidade_pais, API_TEMPO_ATUAL));
     localStorage.setItem('tempo_atual', cidade);
+
 
     alert("a submeter");
 }
