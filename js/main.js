@@ -6,6 +6,22 @@ if (localStorage.getItem('unidade') == undefined) {
     localStorage.setItem('unidade', 'metric');
 }
 
+function getLocation (){
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            let localizacao_atual = [];
+            console.log(localizacao_atual);
+            localizacao_atual[0] = position.coords.latitude;
+            localizacao_atual[1] = position.coords.longitude;
+            return localizacao_atual;
+        });
+    } else {
+        console.log("Browser não suporta geolocalização");
+    }
+}
+
+
 //---------------------------------------------CONSTANTES--------------------------------------
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
@@ -168,6 +184,9 @@ function renderizar_pag_home() {
     } else {
         $('#rbtn_imperial').prop("checked",true);
     }
+    let localizacao_atual = getLocation();
+    console.log(localizacao_atual);
+
     renderizar_fav_pag_home();
     inicializar_autocomplete();
 }
