@@ -6,22 +6,6 @@ if (localStorage.getItem('unidade') == undefined) {
     localStorage.setItem('unidade', 'metric');
 }
 
-function getLocation (){
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position){
-            let localizacao_atual = [];
-            console.log(localizacao_atual);
-            localizacao_atual[0] = position.coords.latitude;
-            localizacao_atual[1] = position.coords.longitude;
-            return localizacao_atual;
-        });
-    } else {
-        console.log("Browser não suporta geolocalização");
-    }
-}
-
-
 //---------------------------------------------CONSTANTES--------------------------------------
 const API_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 const API_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
@@ -57,10 +41,8 @@ let btn_dia4_select = null;
 let btn_dia5_select = null;
 let btn_dia_select = null;
 let prev_dias_select = null;
-
 let item_media = null;
 let obj_lstorage_array_favoritos = [];
-
 
 function inicializar_autocomplete() {
     let input = document.getElementById('searchTextField');
@@ -80,65 +62,6 @@ function btn_submeter() {
     localStorage.setItem('tempo_atual', cidade);
 }
 
-/*function fazer_pedido(pedido, destinolocalstorage) {
-    let pedido_construido = construir_pedido(pedido);
-    $.ajax({
-        method: 'GET',
-        async: false,
-        url: pedido_construido,
-        error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-        }
-    }).done(function (msg) {
-        console.log('Entrou: ' + msg.cod);
-        if (parseInt(msg.cod) !== responseOK) {
-            console.log(msg.cod);
-            alert("Erro: " + msg.cod + "\n" + msg.message);
-        } else if (typeof Storage !== "undefined") {
-            //código para webStorage Api
-            localStorage.setItem(destinolocalstorage, JSON.stringify(msg));
-        } else {
-            alert("Web Storage não suportado.");
-        }
-    });
-}
-
-
-function construir_pedido(tipo_pedido) {
-    let cidade, pais, cidadePais;
-
-    if (autocomplete !== undefined) {
-        let sitio = autocomplete.getPlace();
-
-        cidade = sitio.address_components[LOCALITY].long_name;
-
-        if (sitio.address_components.length <= ADDRESS_COMPONENT_SIZE) {
-            pais = sitio.address_components[ADMINISTRATIVE_LEVEL_2].short_name;
-        } else {
-            pais = sitio.address_components[ADMINISTRATIVE_LEVEL_3].short_name;
-        }
-
-        cidadePais = cidade + ',' + pais;
-        foto_url = sitio.photos[0].getUrl();
-    } else {
-        cidadePais = $("#nome_cidade").text();
-    }
-    localStorage.setItem('foto_url', foto_url);
-
-    let unidade = "&units=" + localStorage.getItem('unidade');
-
-    if (tipo_pedido === PEDIR_TEMPO_ACTUAL) {
-        let pedido_tempo_actual = API_WEATHER_URL + cidadePais + unidade + API_KEY;
-        return pedido_tempo_actual;
-    }
-
-    if (tipo_pedido === PEDIR_SIGNIFICATIVA) {
-        let pedido_significativa = API_FORECAST_URL + cidadePais + unidade + API_KEY;
-        return pedido_significativa;
-    }
-}*/
-
 //---------------------------------------------Página Home---------------------------------------
 function renderizar_fav_pag_home() {
 
@@ -147,25 +70,21 @@ function renderizar_fav_pag_home() {
     let response_str = localStorage.getItem('array_favoritos');
     let msg = JSON.parse(response_str);
     if (msg != null) {
-        let unidade = localStorage.getItem('unidade') == "metric" ? "C" : "F";
-        let unidade_vel = localStorage.getItem('unidade') === 'metric' ? 'km/h' : 'mph/h';
-        console.log(unidade);
         for (let i = 0; i < msg.length; i++) {
             if (msg[i].visivel_home === 1) {
                 let item_bloco_dia_clone = item_bloco_dia.clone();
-                console.log(msg[i].str_cidade_api);
                 let dados_json = get_obj_api_opewheather(msg[i].str_cidade_api, API_TEMPO_ATUAL);
-                console.log(dados_json);
                 let nome_cidade = dados_json.name + ', ' + dados_json.sys.country;
                 let vento_vel = (dados_json.wind.speed * 3.6).toFixed(0);
                 let vento_dir = dados_json.wind.deg;
                 let humidade = dados_json.main.humidity;
                 let temp_min = dados_json.main.temp_min.toFixed(0);
                 let temp_max = dados_json.main.temp_max.toFixed(0);
+                let objMedida = getMedida(vento_vel);
                 $('.nome-cidade', item_bloco_dia_clone).text(nome_cidade);
-                $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade);
-                $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade);
-                $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
+                $('.temp_min', item_bloco_dia_clone).text(temp_min + objMedida.unidade_temp);
+                $('.temp_max', item_bloco_dia_clone).text(temp_max + objMedida.unidade_temp);
+                $('.vento_vel', item_bloco_dia_clone).text(objMedida.velocidade + objMedida.unidade_vento);
                 $('.vento_dir', item_bloco_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
                 $('.humidade', item_bloco_dia_clone).text(humidade + "%");
                 $('.linha_blocos').append(item_bloco_dia_clone);
@@ -184,9 +103,6 @@ function renderizar_pag_home() {
     } else {
         $('#rbtn_imperial').prop("checked",true);
     }
-    let localizacao_atual = getLocation();
-    console.log(localizacao_atual);
-
     renderizar_fav_pag_home();
     inicializar_autocomplete();
 }
@@ -200,27 +116,43 @@ function GuardarUnidade() {
         localStorage.setItem('unidade', 'imperial');
     }
     console.log(localStorage.getItem('unidade'));
-
     renderizar_fav_pag_home();
+}
+
+function getMedida(velocidade) {
+    let obj_medida = {
+        unidade_temp: '',
+        unidade_vento: '',
+        velocidade: velocidade
+    };
+
+    let medida = localStorage.getItem('unidade');
+
+    if(medida === 'metric'){
+        obj_medida.unidade_temp = 'º C';
+        obj_medida.unidade_vento = ' Km/h';
+        obj_medida.velocidade = converter_para_kms_hora(velocidade);
+        return obj_medida;
+    } else {
+        obj_medida.unidade_temp = 'º F';
+        obj_medida.unidade_vento = ' Mph';
+        return obj_medida;
+    }
 }
 
 //---------------------------------------------Página Detalhes--------------------------------------
 function renderizar_pag_detalhes() {
     let response_str = localStorage.getItem('tempo_atual');
-    //console.log(typeof response_str, response_str);
     let response_json = JSON.parse(response_str);
-    //console.log(typeof response_json, response_json);
     foto_url = localStorage.getItem('foto_url');
-    //console.log(typeof foto_url, foto_url);
-    let unidade = localStorage.getItem('unidade') === 'metric' ? '.º C' : '.º F';
-    let unidade_vel = localStorage.getItem('unidade') === 'metric' ? 'km/h' : 'mph/h';
+    let objMedida = getMedida(response_json.wind.speed);
     $('#nome_cidade').text(response_json.name);
     $('#detalhes_imagem_cidade').attr('alt', response_json.name);
     $('#detalhes_imagem_cidade').attr('src', foto_url);
-    $('#valor_temp_atual').text(response_json.main.temp + unidade);
-    $('#valor_temp_min').text(response_json.main.temp_min + unidade);
-    $('#valor_temp_max').text(response_json.main.temp_max + unidade);
-    $('#valor_vel').text(converter_para_kms_hora(response_json.wind.speed) + ' Kms/h');
+    $('#valor_temp_atual').text(response_json.main.temp + objMedida.unidade_temp);
+    $('#valor_temp_min').text(response_json.main.temp_min + objMedida.unidade_temp);
+    $('#valor_temp_max').text(response_json.main.temp_max + objMedida.unidade_temp);
+    $('#valor_vel').text(objMedida.velocidade + objMedida.unidade_vento);
     $('#valor_dir').text(ponto_cardeal(response_json.wind.deg));
     $('#valor_pressao').text(response_json.main.pressure + ' hPa');
     $('#valor_humidade').text(response_json.main.humidity + '%');
@@ -235,10 +167,8 @@ function converter_para_kms_hora(n) {
 
 function btn_adc_fav_pag_det() {
     let response_str = localStorage.getItem('tempo_atual');
-    //console.log(typeof response_str, response_str);
     let response_json = JSON.parse(response_str);
     let str_cidade_pais = response_json.name + ',' + response_json.sys.country;
-    //Informa o utilizador do sucesso ou não da introdução da cidade nos favoritos
     if (adicionar_favorito(str_cidade_pais) === INSUCESSO) {
         alert("A cidade já existe nos favoritos.");
     } else {
@@ -259,9 +189,7 @@ function btn_go_signif_pag_det() {
 function renderizar_significativa() {
     let response_str = localStorage.getItem('significativa');
     let msg = JSON.parse(response_str);
-    console.log(msg);
-    let unidade_temp = localStorage.getItem('unidade') === 'metric' ? 'C' : 'F';
-    let unidade_vel = localStorage.getItem('unidade') === 'metric' ? 'km/h' : 'mph/h';
+
     //Clone dos blocos de html
     item_coluna_hora = $('.coluna_hora').clone();
     $('.linha_hora').html('');
@@ -284,14 +212,15 @@ function renderizar_significativa() {
         let humidade = dados_json.main.humidity;
         let temp_min = json_min_max[i - 1].temp_min;
         let temp_max = json_min_max[i - 1].temp_max;
+        let objMedida = getMedida(vento_vel);
         $(item_bloco_dia_clone).attr("id", "dia_" + i);
         $('.btn_dia', item_bloco_dia_clone).attr("id", "btn_dia_" + i);
         $('.btn_dia', item_bloco_dia_clone).attr("onclick", "esconde_mostra_cont_signif(" + i + ")");
         $('.data', item_bloco_dia_clone).text(dia + "/" + MESES_ABREV[mes]);
         $('.dia', item_bloco_dia_clone).text(DIAS_SEMANA[dia_sem]);
-        $('.temp_min', item_bloco_dia_clone).text(temp_min + "º" + unidade_temp);
-        $('.temp_max', item_bloco_dia_clone).text(temp_max + "º" + unidade_temp);
-        $('.vento_vel', item_bloco_dia_clone).text(vento_vel + " km/h");
+        $('.temp_min', item_bloco_dia_clone).text(temp_min + objMedida.unidade_temp);
+        $('.temp_max', item_bloco_dia_clone).text(temp_max + objMedida.unidade_temp);
+        $('.vento_vel', item_bloco_dia_clone).text(objMedida.velocidade + objMedida.unidade_vento);
         $('.vento_dir', item_bloco_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
         $('.humidade', item_bloco_dia_clone).text(humidade + "%");
         $('.linha_blocos').append(item_bloco_dia_clone);
@@ -310,7 +239,6 @@ function renderizar_significativa() {
 function atribuir_dias(json) {
     let temp_min_max = [];
     let len_temp_min_max = 0;
-    console.log(json);
     for (var i = 0; i < 40; i++) {
         var data_hora = json[i].dt_txt.split(" ");
         var json_data = data_hora[0];
@@ -342,7 +270,6 @@ function atribuir_dias(json) {
             }
         }
     }
-    console.log(temp_min_max);
     return temp_min_max;
 }
 
@@ -357,9 +284,6 @@ function ponto_cardeal(grau) {
             }
         }
         return PONTOS_CARDEAIS[0].ponto;
-    } else {
-        return;
-        console.log("Erro - grau tem de estar entre 0 e 359");
     }
 }
 
@@ -408,7 +332,6 @@ function esconde_mostra_cont_signif(div_dia) {
             descritivo_3h(div_dia);
         }
     }
-    console.log("Botao clicado -> " + div_dia + " Estado visibilidade->");
 }
 
 //Função que preenche a tabela discrivida de 3h em 3h para o dia selecionado
@@ -417,7 +340,7 @@ function esconde_mostra_cont_signif(div_dia) {
 function descritivo_3h(div_dia) {
     let response_str = localStorage.getItem('significativa');
     let msg = JSON.parse(response_str);
-    let unidade_temp = localStorage.getItem('unidade') == "metric" ? "C" : "F";
+
     $('.linha_hora').html('');
     $('.linha_dia').html('');
     for (var i = -1; i < 8; i++) {
@@ -442,7 +365,7 @@ function descritivo_3h(div_dia) {
                 $('.linha_hora').append(item_coluna_hora_clone);
         }
     }
-    /*alterei 8/1 22:16* de var para let*/
+
     let coluna_dia_h_0_clone = item_coluna_dia_h_0.clone();
     $('.linha_dia').append(coluna_dia_h_0_clone);
     for (let i = ((div_dia * 8) - 8), j = 0; j < 8; i++, j++) {
@@ -453,17 +376,17 @@ function descritivo_3h(div_dia) {
         let vento_dir = elemento1.wind.deg;
         let humidade = elemento1.main.humidity;
         let press_atmosferica = elemento1.main.pressure + " hPa";
+        let objMedida = getMedida(vento_vel);
 
 
-        $('.temperatura', coluna_dia_clone).text(temperatura + "º" + unidade_temp);
-        $('.vento_vel', coluna_dia_clone).text(vento_vel + " km/h");
+        $('.temperatura', coluna_dia_clone).text(temperatura + objMedida.unidade_temp);
+        $('.vento_vel', coluna_dia_clone).text(objMedida.velocidade + objMedida.unidade_vento);
         $('.vento_dir', coluna_dia_clone).text(ponto_cardeal(parseInt(vento_dir)));
         $('.humidade', coluna_dia_clone).text(humidade);
         $('.press_atmos', coluna_dia_clone).text(press_atmosferica);
 
 
         $('.linha_dia').append(coluna_dia_clone);
-        //console.log("i -> ", i, " j-> ", j, "Data -> ", elemento.dt_txt, "Temp. -> ", temperatura, "Vel. Vento -> ", vento_vel, "Direcao Vento", vento_dir);
     }
 }
 
@@ -488,9 +411,7 @@ function render_lista_favoritos() {
     $('.lista_mae').html('');
     let str_lstorage_array_favoritos = localStorage.getItem('array_favoritos');
     let lstorage_array_favoritos = JSON.parse(str_lstorage_array_favoritos);
-    let unidade = localStorage.getItem('unidade');
-    let unidade_temp = unidade == "metric" ? "C" : "F";
-    let unidade_vel = unidade == 'metric' ? ' km/h' : ' m/h';
+
     if (lstorage_array_favoritos === null) {
     } else {
         for (let i = 0; i < lstorage_array_favoritos.length; i++) {
@@ -508,10 +429,10 @@ function render_lista_favoritos() {
             $('.cbox_input_vis_home', item_media_clone).attr('checked', load_cbox);
             $('.cbox_label_vis_home', item_media_clone).attr("for", "cbox_vis_home_" + (i + 1));
             $('.cidade', item_media_clone).text(json.name);
-            $('.temp_max', item_media_clone).text(json.main.temp_max + 'º' + unidade_temp);
-            $('.temp_min', item_media_clone).text(json.main.temp_min + 'º' + unidade_temp);
-            let speed = unidade == "metric" ? converter_para_kms_hora(json.wind.speed) : json.wind.speed;
-            $('.vento_vel', item_media_clone).text(speed + unidade_vel);
+            let objMedida = getMedida(json.wind.speed);
+            $('.temp_max', item_media_clone).text(json.main.temp_max + objMedida.unidade_temp);
+            $('.temp_min', item_media_clone).text(json.main.temp_min + objMedida.unidade_temp);
+            $('.vento_vel', item_media_clone).text(objMedida.velocidade + objMedida.unidade_vento);
             $('.vento_dir', item_media_clone).text(ponto_cardeal(parseInt(json.wind.deg)));
             $('.humidade', item_media_clone).text(json.main.humidity + '%');
             $('.lista_mae').append(item_media_clone);
@@ -538,10 +459,8 @@ function adicionar_favorito(str_cidade) {
                 "visivel_home": 0
             });
             localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
-
             return SUCESSO;
         } else {
-            //alert("A cidade selecionada já existe nos favoritos");
             return INSUCESSO;
         }
     }
@@ -579,7 +498,6 @@ function existe_cidade(str_cidade_pais) {
     if (obj_lstorage_array_favoritos === null) {
         return 0;
     }
-    let contar = 0;
     for (let i = 0; i < obj_lstorage_array_favoritos.length; i++) {
         if (obj_lstorage_array_favoritos[i].str_cidade_api === str_cidade_pais) {
             return 1;
@@ -598,7 +516,6 @@ function get_obj_api_opewheather(cidade, api) {
     if (api === API_SIGNIFICATIVA) {
         pedido_construido = API_FORECAST_URL + cidade + unidade + API_KEY;
     }
-    console.log(pedido_construido);
 
     $.ajax({
         method: 'GET',
@@ -610,7 +527,6 @@ function get_obj_api_opewheather(cidade, api) {
         }
     }).done(function (msg) {
         if (parseInt(msg.cod) !== responseOK) {
-            console.log("Erro 200 -> " + msg.cod);
             alert("Erro: " + msg.cod + "\n" + msg.message);
             resultado = INSUCESSO;
         } else {
@@ -658,47 +574,3 @@ function atualiza_fav_vis_home(pos) {      //Actualiza as cidades visiveis no ar
     obj_lstorage_array_favoritos[pos].visivel_home = new_valor_vis_home;
     localStorage.setItem('array_favoritos', JSON.stringify(obj_lstorage_array_favoritos));
 }
-
-
-/*--------------------Funções de debug-----------------------
-
-function limpar_array_favoritos() {
-    localStorage.removeItem("array_favoritos");
-}
-function ler_array (){
-    let lstorage_array_favoritos = localStorage.getItem('array_favoritos');
-    obj_lstorage_array_favoritos = JSON.parse(lstorage_array_favoritos);
-    console.log("Função ler array");
-    obj_lstorage_array_favoritos.forEach(function (elemento) {
-        console.log(elemento.cidade);
-        console.log(elemento.visivel_home);
-    });
-}
-
-let len_array_fav;
-let str_cid;
-let str_cid_pais;
-let str_url;
-
-
-
-function construir_pedido_por_cidade(tipo_pedido,city) {
-    let unidade = "&units="+localStorage.getItem('unidade');
-    if (tipo_pedido === 1){
-        let pedido_tempo_actual = API_WEATHER_URL+city+unidade+API_KEY;
-        console.log(pedido_tempo_actual);
-        return pedido_tempo_actual;
-    }
-    if (tipo_pedido === 2){
-        let pedido_significativa = API_FORECAST_URL+city+unidade+API_KEY;
-        return pedido_significativa;
-    }
-}
-
-
-
-
-
-
-
-*/
