@@ -374,7 +374,7 @@ function descritivo_3h(div_dia) {
         let temperatura = (elemento1.main.temp).toFixed(0);
         let vento_vel = (elemento1.wind.speed * 3.6).toFixed(0);
         let vento_dir = elemento1.wind.deg;
-        let humidade = elemento1.main.humidity;
+        let humidade = elemento1.main.humidity + '%';
         let press_atmosferica = elemento1.main.pressure + " hPa";
         let objMedida = getMedida(vento_vel);
 
