@@ -54,7 +54,6 @@ function inicializar_autocomplete() {
 }
 
 function btn_submeter() {
-
     place = autocomplete.getPlace();
     let cidade_pais = autocomplete_cidade_pais(place);
 
@@ -63,9 +62,6 @@ function btn_submeter() {
 
     let cidade = JSON.stringify(get_obj_api_opewheather(cidade_pais, API_TEMPO_ATUAL));
     localStorage.setItem('tempo_atual', cidade);
-
-
-    alert("a submeter");
 }
 
 /*function fazer_pedido(pedido, destinolocalstorage) {
