@@ -200,7 +200,8 @@ header h1{
     margin: 20px auto 0;
 }
 .footer {
-    color: black;
+    color: darkgrey;
+    margin-top: 30px;
 }
 .wrapper{
     min-height: 100%;
