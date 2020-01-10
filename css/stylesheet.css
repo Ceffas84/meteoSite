@@ -165,7 +165,7 @@ header{
     /*margin-bottom: 1rem;*/
 }
 header h1{
-    color: black;
+    color: #1c9f73;
 }
 
 .cabecalho_pag{
@@ -188,10 +188,7 @@ header h1{
     margin: 20px auto 0;
 }
 .footer {
-
-
-
-    color: white;
+    color: #1c9f73;
     text-align: center;
 }
 .wrapper{
